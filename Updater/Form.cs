@@ -27,6 +27,7 @@ namespace Updater
                 folderUpdate.Checked = datajson["update_folder"];
                 //label1.Text = datajson["streams"].ToString();
 
+/*                Search.Focus();*/
             }
         }
 
@@ -53,18 +54,15 @@ namespace Updater
                 MessageBox.Show(send, "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
-
-            /*            panel1.Controls.Clear();
-                        panel1.Controls.Add(this.LabelInfo);
-                        LabelInfo.Text = "Search...";*/
+            panel1.Controls.Clear();
+            panel1.Controls.Add(this.LabelInfo);
+            LabelInfo.Text = "Search...";
 
             //panel1.Controls.Clear();
             //panel1.Controls.Add(this.LabelInfo);
             //LabelInfo.Text = "Not found.";
 
-            panel1.Controls.Clear();
+/*            panel1.Controls.Clear();
 
 
             Console.Write("No! ");
@@ -72,7 +70,7 @@ namespace Updater
 
 
 
-            panel1.Controls.Add(this.listView1);
+            panel1.Controls.Add(this.listView1);*/
 
 
 
