@@ -40,7 +40,7 @@ namespace Updater
             if (!startIp)
             {
                 send = $"Incorrect Start address: {Start_IP.Text}";
-            };
+            }
             if ((!startIp) & (!stopIp))
             {
                 send += "\n";
@@ -87,12 +87,48 @@ namespace Updater
 
         void Save_Click(object sender, EventArgs e)
         {
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "CSV files (*.csv) | *.csv";
+            saveFileDialog1.RestoreDirectory = true;
 
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    myStream.Close();
+                }
+            }
         }
 
         void Select_Click(object sender, EventArgs e)
         {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
 
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = Application.StartupPath.ToString();
+                openFileDialog.Filter = "Firmware(*.tar.gz) | *.tar.gz";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+
+            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
         }
 
         void Update_Click(object sender, EventArgs e)
