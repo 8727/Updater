@@ -51,14 +51,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
             this.LabelInfo = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.RangeIP.SuspendLayout();
             this.UpdateFile.SuspendLayout();
             this.Updater.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // RangeIP
             // 
-            this.RangeIP.Controls.Add(this.Save);
             this.RangeIP.Controls.Add(this.Search);
             this.RangeIP.Controls.Add(this.Stop_IP);
             this.RangeIP.Controls.Add(this.Start_IP);
@@ -68,7 +69,7 @@
             this.RangeIP.Margin = new System.Windows.Forms.Padding(5);
             this.RangeIP.Name = "RangeIP";
             this.RangeIP.Padding = new System.Windows.Forms.Padding(5);
-            this.RangeIP.Size = new System.Drawing.Size(460, 100);
+            this.RangeIP.Size = new System.Drawing.Size(371, 100);
             this.RangeIP.TabIndex = 0;
             this.RangeIP.TabStop = false;
             // 
@@ -80,7 +81,7 @@
             this.Save.FlatAppearance.BorderSize = 0;
             this.Save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Save.Location = new System.Drawing.Point(374, 14);
+            this.Save.Location = new System.Drawing.Point(5, 12);
             this.Save.Margin = new System.Windows.Forms.Padding(5);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(80, 80);
@@ -152,7 +153,7 @@
             this.UpdateFile.Controls.Add(this.label1);
             this.UpdateFile.Controls.Add(this.Selects);
             this.UpdateFile.Controls.Add(this.textBox1);
-            this.UpdateFile.Location = new System.Drawing.Point(724, 0);
+            this.UpdateFile.Location = new System.Drawing.Point(634, 0);
             this.UpdateFile.Name = "UpdateFile";
             this.UpdateFile.Size = new System.Drawing.Size(601, 100);
             this.UpdateFile.TabIndex = 1;
@@ -223,7 +224,7 @@
             this.Updater.Controls.Add(this.folderUpdate);
             this.Updater.Controls.Add(this.updateAlll);
             this.Updater.Controls.Add(this.Updates);
-            this.Updater.Location = new System.Drawing.Point(476, 0);
+            this.Updater.Location = new System.Drawing.Point(386, 0);
             this.Updater.Name = "Updater";
             this.Updater.Size = new System.Drawing.Size(240, 100);
             this.Updater.TabIndex = 2;
@@ -311,6 +312,16 @@
             this.LabelInfo.TabIndex = 0;
             this.LabelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.Save);
+            this.groupBox1.Location = new System.Drawing.Point(1241, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(93, 100);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -320,6 +331,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1584, 681);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.Updater);
@@ -339,6 +351,7 @@
             this.UpdateFile.PerformLayout();
             this.Updater.ResumeLayout(false);
             this.Updater.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -367,6 +380,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label LabelInfo;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
