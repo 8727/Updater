@@ -89,6 +89,7 @@ namespace Updater
         {
             Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = Application.StartupPath.ToString();
             saveFileDialog1.Filter = "CSV files (*.csv) | *.csv";
             saveFileDialog1.RestoreDirectory = true;
 
@@ -104,7 +105,6 @@ namespace Updater
 
         void Select_Click(object sender, EventArgs e)
         {
-            var fileContent = string.Empty;
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -115,51 +115,18 @@ namespace Updater
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
+                    textBox1.Text = openFileDialog.SafeFileName;
                     filePath = openFileDialog.FileName;
+                    
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
 
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
                 }
             }
-
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
         }
 
         void Update_Click(object sender, EventArgs e)
         {
-            unZip(@"D:\03 decision_1.1.7-dev-tx2.tar.gz", @"D:\2.tar");
-        }
 
-        void unZip(string pathSrc, string pathDest)
-        {
-            try
-            {
-                using (var fs = File.OpenRead(pathSrc))
-                {
-                    using (var decompressor = new GZipStream(fs, CompressionMode.Decompress))
-                    {
-                        using (var output = File.Create(pathDest))
-                        {
-                            byte[] buffer = new byte[2048];
-                            int n;
-                            while ((n = decompressor.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                output.Write(buffer, 0, n);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
     }
