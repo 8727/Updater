@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.IO.Compression;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
@@ -27,7 +26,7 @@ namespace Updater
                 folderUpdate.Checked = datajson["update_folder"];
                 //label1.Text = datajson["streams"].ToString();
 
-/*                Search.Focus();*/
+                /*                Search.Focus();*/
             }
         }
 
@@ -62,15 +61,15 @@ namespace Updater
             //panel1.Controls.Add(this.LabelInfo);
             //LabelInfo.Text = "Not found.";
 
-/*            panel1.Controls.Clear();
+            /*            panel1.Controls.Clear();
 
 
-            Console.Write("No! ");
+                        Console.Write("No! ");
 
 
 
 
-            panel1.Controls.Add(this.listView1);*/
+                        panel1.Controls.Add(this.listView1);*/
 
 
 
@@ -103,6 +102,13 @@ namespace Updater
             }
         }
 
+
+
+
+
+
+
+
         void Select_Click(object sender, EventArgs e)
         {
             var filePath = string.Empty;
@@ -117,7 +123,9 @@ namespace Updater
                 {
                     textBox1.Text = openFileDialog.SafeFileName;
                     filePath = openFileDialog.FileName;
-                    
+
+                    Unzipfile.ExtractTarGz(filePath, @"D:\6");
+                    //using (var stream = File.OpenRead(filePath))
 
 
                 }
