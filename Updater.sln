@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{93179C7A-B170-4242-942A-BB501FFD272A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSH", "SSH\SSH.csproj", "{71EB83F1-3D88-43F5-929B-21F6E7B26189}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{93179C7A-B170-4242-942A-BB501FFD272A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93179C7A-B170-4242-942A-BB501FFD272A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93179C7A-B170-4242-942A-BB501FFD272A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71EB83F1-3D88-43F5-929B-21F6E7B26189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71EB83F1-3D88-43F5-929B-21F6E7B26189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71EB83F1-3D88-43F5-929B-21F6E7B26189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71EB83F1-3D88-43F5-929B-21F6E7B26189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
