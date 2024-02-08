@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.RangeIP = new System.Windows.Forms.GroupBox();
             this.Search = new System.Windows.Forms.Button();
             this.Stop_IP = new System.Windows.Forms.TextBox();
             this.Start_IP = new System.Windows.Forms.TextBox();
             this.Lebel_stop_IP = new System.Windows.Forms.Label();
             this.Lebel_start_IP = new System.Windows.Forms.Label();
-            this.listIP = new System.Windows.Forms.GroupBox();
+            this.ListIP = new System.Windows.Forms.GroupBox();
             this.RangeIP.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,22 +47,23 @@
             this.RangeIP.Controls.Add(this.Lebel_stop_IP);
             this.RangeIP.Controls.Add(this.Lebel_start_IP);
             this.RangeIP.Location = new System.Drawing.Point(8, 0);
-            this.RangeIP.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.RangeIP.Margin = new System.Windows.Forms.Padding(8);
             this.RangeIP.Name = "RangeIP";
-            this.RangeIP.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.RangeIP.Padding = new System.Windows.Forms.Padding(8);
             this.RangeIP.Size = new System.Drawing.Size(320, 96);
             this.RangeIP.TabIndex = 1;
             this.RangeIP.TabStop = false;
             // 
             // Search
             // 
-            this.Search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Search.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Search.BackgroundImage = global::SSH.Properties.Resources.search;
+            this.Search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Search.FlatAppearance.BorderSize = 0;
             this.Search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Search.Location = new System.Drawing.Point(250, 21);
-            this.Search.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Search.Margin = new System.Windows.Forms.Padding(8);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(60, 60);
             this.Search.TabIndex = 4;
@@ -70,7 +72,7 @@
             // Stop_IP
             // 
             this.Stop_IP.Location = new System.Drawing.Point(88, 52);
-            this.Stop_IP.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Stop_IP.Margin = new System.Windows.Forms.Padding(8);
             this.Stop_IP.Name = "Stop_IP";
             this.Stop_IP.Size = new System.Drawing.Size(150, 26);
             this.Stop_IP.TabIndex = 3;
@@ -80,7 +82,7 @@
             // Start_IP
             // 
             this.Start_IP.Location = new System.Drawing.Point(88, 20);
-            this.Start_IP.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Start_IP.Margin = new System.Windows.Forms.Padding(8);
             this.Start_IP.Name = "Start_IP";
             this.Start_IP.Size = new System.Drawing.Size(150, 26);
             this.Start_IP.TabIndex = 2;
@@ -108,26 +110,31 @@
             this.Lebel_start_IP.TabIndex = 0;
             this.Lebel_start_IP.Text = "Start IP:";
             // 
-            // listIP
+            // ListIP
             // 
-            this.listIP.Location = new System.Drawing.Point(8, 96);
-            this.listIP.Name = "listIP";
-            this.listIP.Size = new System.Drawing.Size(320, 534);
-            this.listIP.TabIndex = 2;
-            this.listIP.TabStop = false;
+            this.ListIP.Location = new System.Drawing.Point(8, 96);
+            this.ListIP.Name = "ListIP";
+            this.ListIP.Size = new System.Drawing.Size(320, 534);
+            this.ListIP.TabIndex = 2;
+            this.ListIP.TabStop = false;
             // 
             // Ui
             // 
+            this.AccessibleName = "";
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(1333, 692);
-            this.Controls.Add(this.listIP);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.ListIP);
             this.Controls.Add(this.RangeIP);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
+            this.MaximizeBox = false;
             this.Name = "Ui";
-            this.Text = "Form";
+            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "SSH";
             this.RangeIP.ResumeLayout(false);
             this.RangeIP.PerformLayout();
             this.ResumeLayout(false);
@@ -142,7 +149,7 @@
         private System.Windows.Forms.TextBox Start_IP;
         private System.Windows.Forms.Label Lebel_stop_IP;
         private System.Windows.Forms.Label Lebel_start_IP;
-        private System.Windows.Forms.GroupBox listIP;
+        private System.Windows.Forms.GroupBox ListIP;
     }
 }
 
