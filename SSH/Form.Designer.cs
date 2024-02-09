@@ -68,6 +68,7 @@
             this.Search.Size = new System.Drawing.Size(60, 60);
             this.Search.TabIndex = 4;
             this.Search.UseVisualStyleBackColor = false;
+            this.Search.Click += new System.EventHandler(this.Search_Click);
             // 
             // Stop_IP
             // 
@@ -88,7 +89,6 @@
             this.Start_IP.TabIndex = 2;
             this.Start_IP.Text = "192.168.88.11";
             this.Start_IP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Start_IP.TextChanged += new System.EventHandler(this.Start_IP_TextChanged);
             // 
             // Lebel_stop_IP
             // 
@@ -135,6 +135,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SSH";
+            this.Load += new System.EventHandler(this.Ui_Load);
             this.RangeIP.ResumeLayout(false);
             this.RangeIP.PerformLayout();
             this.ResumeLayout(false);
