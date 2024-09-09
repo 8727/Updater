@@ -120,15 +120,15 @@ namespace Updater
             return updateStatus;
         }
 
-        void UploadFactor(string ip, string filePath, int row, int column)
+        async Task UploadFactorAsync(string ip, string filePath, int row, int column)
         {
             bool status = true;
             int attempts = 5;
             do
             {
-                if (StateAsync(ip) != "uploading" & attempts != 0)
+                if (await StateAsync(ip) != "uploading" & attempts != 0)
                 {
-                    CancelAsync(ip);
+                    await CancelAsync(ip);
                     attempts--;
                     Thread.Sleep(500);
                 }
@@ -143,9 +143,9 @@ namespace Updater
             attempts = 5;
             do
             {
-                if (UploadAsync(ip, filePath) & attempts != 0)
+                if (await UploadAsync(ip, filePath) & attempts != 0)
                 {
-                    CancelAsync(ip);
+                    await CancelAsync(ip);
                     attempts--;
                     Thread.Sleep(500);
                 }
