@@ -1,25 +1,31 @@
 ﻿using System.IO;
-using System.Net;
-using System.Text;
+using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Net.Http.Headers;
 
 namespace Updater
 {
     internal class UpdateFactor
     {
-        string State(string ipAddress)
+        async Task<string> StateAsync(string ipAddress)
         {
             string updateStatus = "undefined";
             try
             {
-                HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create($"http://{ipAddress}/updater/state");
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                using (StreamReader stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
+                using (var httpClient = new HttpClient())
                 {
-                    string factorJson = stream.ReadToEnd();
-                    var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
-                    updateStatus = datajson["stage"];
+                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), $"http://{ipAddress}/updater/state"))
+                    {
+                        request.Headers.TryAddWithoutValidation("accept", "text/plain");
+
+                        var response = await httpClient.SendAsync(request);
+                        response.EnsureSuccessStatusCode();
+                        var json = await response.Content.ReadAsStringAsync();
+                        var datajson = new JavaScriptSerializer().Deserialize<dynamic>(json);
+                        updateStatus = datajson["stage"];
+                    }
                 }
             }
             catch
@@ -30,27 +36,87 @@ namespace Updater
             return updateStatus;
         }
 
-        bool Upload(string ipAddress, string filePath)
+        async Task<bool> UploadAsync(string ipAddress, string filePath)
         {
             bool updateStatus = false;
-            string url = $"http://{ipAddress}/updater/upload";
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/upload"))
+                    {
+                        request.Headers.TryAddWithoutValidation("accept", "*/*");
+                        var multipartContent = new MultipartFormDataContent();
+                        var file = new ByteArrayContent(File.ReadAllBytes(filePath));
+                        file.Headers.Add("Content-Type", "application/x-gzip");
+                        multipartContent.Add(file, "file", Path.GetFileName(filePath));
+                        request.Content = multipartContent;
 
+                        var response = await httpClient.SendAsync(request);
+                        if (response.StatusCode.ToString() == "OK")
+                        {
+                            updateStatus = true;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                updateStatus = false;
+            }
             return updateStatus;
         }
 
-        bool Install(string ipAddress)
+        async Task<bool> InstallAsync(string ipAddress)
         {
             bool updateStatus = false;
-            string url = $"http://{ipAddress}/updater/install";
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/install"))
+                    {
+                        request.Headers.TryAddWithoutValidation("accept", "text/plain");
+                        request.Content = new StringContent("");
+                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
 
+                        var response = await httpClient.SendAsync(request);
+                        if (response.StatusCode.ToString() == "OK")
+                        {
+                            updateStatus = true;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                updateStatus = false;
+            }
             return updateStatus;
         }
 
-        bool Cancel(string ipAddress)
+        async Task<bool> CancelAsync(string ipAddress)
         {
             bool updateStatus = false;
-            string url = $"http://{ipAddress}/updater/cancel";
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/cancel"))
+                    {
+                        request.Headers.TryAddWithoutValidation("accept", "*/*");
 
+                        request.Content = new StringContent("");
+                        request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+
+                        var response = await httpClient.SendAsync(request);
+                    }
+                }
+            }
+            catch
+            {
+                updateStatus = false;
+            }
             return updateStatus;
         }
 
@@ -60,9 +126,9 @@ namespace Updater
             int attempts = 5;
             do
             {
-                if (State(ip) != "uploading" & attempts != 0)
+                if (StateAsync(ip) != "uploading" & attempts != 0)
                 {
-                    Cancel(ip);
+                    CancelAsync(ip);
                     attempts--;
                     Thread.Sleep(500);
                 }
@@ -77,9 +143,9 @@ namespace Updater
             attempts = 5;
             do
             {
-                if (Upload(ip, filePath) & attempts != 0)
+                if (UploadAsync(ip, filePath) & attempts != 0)
                 {
-                    Cancel(ip);
+                    CancelAsync(ip);
                     attempts--;
                     Thread.Sleep(500);
                 }
