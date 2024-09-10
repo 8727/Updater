@@ -60,6 +60,7 @@
     <Compile Include="IpAddres.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchFactor.cs" />
     <Compile Include="UpdateFactor.cs" />
     <EmbeddedResource Include="Form.resx">
       <DependentUpon>Form.cs</DependentUpon>

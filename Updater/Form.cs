@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,9 +9,12 @@ namespace Updater
 {
     public partial class Ui : Form
     {
+        public static Ui Fr;
         int filesUpdate = 100;
+        public static Hashtable Camera = new Hashtable();
         public Ui()
         {
+            Fr = this;
             InitializeComponent();
         }
 
@@ -30,6 +34,7 @@ namespace Updater
             }
 
         }
+
         void Selects_Click(object sender, EventArgs e)
         {
             var filePath = string.Empty;
@@ -118,10 +123,6 @@ namespace Updater
             CheckboxColumn.FalseValue = false;
             dataGridView.Columns.Add(CheckboxColumn);
 
-
-
-
-
             dataGridView.Columns.Add("IP", "IP");
             dataGridView.Columns[1].Width = 90;
             dataGridView.Columns[1].ReadOnly = true;
@@ -129,31 +130,19 @@ namespace Updater
             dataGridView.Columns[2].Width = 100;
             dataGridView.Columns[2].ReadOnly = true;
 
-            label1.Text = IpAddres.IpToUInt32(StartIP.Text).ToString();
-            label2.Text = IpAddres.IpToUInt32(StopIP.Text).ToString();
+            SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
 
-            uint StartIPv4_Int32 = IpAddres.IpToUInt32(StartIP.Text);
-            uint EndIPv4_Int32 = IpAddres.IpToUInt32(StopIP.Text);
 
-            if (StartIPv4_Int32 > EndIPv4_Int32)
-            {
-                uint xxx = StartIPv4_Int32;
-                StartIPv4_Int32 = EndIPv4_Int32;
-                EndIPv4_Int32 = xxx;
-            }
+        }
 
-            for (uint i = StartIPv4_Int32; i <= EndIPv4_Int32; i++)
-            {
-                int rowNumbe = dataGridView.Rows.Add();
-                dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
-                dataGridView.Rows[rowNumbe].Cells[0].Value = true;
-                dataGridView.Rows[rowNumbe].Cells[1].Value = IpAddres.UInt32ToIp(i);
-                dataGridView.Rows[rowNumbe].Cells[2].Value = IpAddres.NameComplex(IpAddres.UInt32ToIp(i));
-
-                //listBox1.Items.Add(IpAddres.UInt32ToIp(i));
-                //listBox1.Items.Add(IpAddres.NameComplex(IpAddres.UInt32ToIp(i)));
-            }
-
+        public static void DataGridFactorsAdd(string ip, string name)
+        {
+            int rowNumbe = Fr.dataGridView.Rows.Add();
+            Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+            Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+            Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
+            Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
+            Fr.progressBar.PerformStep();
         }
     }
 }
