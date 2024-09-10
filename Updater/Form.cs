@@ -18,6 +18,16 @@ namespace Updater
             InitializeComponent();
         }
 
+        public static void DataGridFactorsAdd(string ip, string name)
+        {
+            int rowNumbe = Fr.dataGridView.Rows.Add();
+            Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+            Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+            Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
+            Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
+            Fr.progressBar.PerformStep();
+        }
+
         void checkBoxFolder_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxFolder.Checked)
@@ -135,14 +145,6 @@ namespace Updater
 
         }
 
-        public static void DataGridFactorsAdd(string ip, string name)
-        {
-            int rowNumbe = Fr.dataGridView.Rows.Add();
-            Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
-            Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
-            Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
-            Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
-            Fr.progressBar.PerformStep();
-        }
+        
     }
 }
