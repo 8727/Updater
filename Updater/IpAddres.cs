@@ -43,7 +43,7 @@ namespace Updater
                         var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
                         string factoryNumber = datajson["unit"]["factoryNumber"];
                         string serialNumber = datajson["certificate"]["serialNumber"];
-                        host = serialNumber + " " + factoryNumber + " " + ip;
+                        host = serialNumber + " - " + factoryNumber;
                     }
                 }
                 catch

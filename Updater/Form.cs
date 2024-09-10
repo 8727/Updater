@@ -51,46 +51,7 @@ namespace Updater
 
         void Updates_Click(object sender, EventArgs e)
         {
-            bool startIp = IpAddres.Check(StartIP.Text);
-            bool stopIp = IpAddres.Check(StopIP.Text);
-
-            string send = "";
-            if (!startIp)
-            {
-                send = $"Incorrect Start address: {StartIP.Text}";
-            }
-            if ((!startIp) & (!stopIp))
-            {
-                send += "\n";
-            }
-            if (!stopIp)
-            {
-                send += $"Incorrect Stop address: {StopIP.Text}";
-            }
-            if ((!startIp) | (!stopIp))
-            {
-                MessageBox.Show(send, "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            label1.Text = IpAddres.IpToUInt32(StartIP.Text).ToString();
-            label2.Text = IpAddres.IpToUInt32(StopIP.Text).ToString();
-
-            uint StartIPv4_Int32 = IpAddres.IpToUInt32(StartIP.Text);
-            uint EndIPv4_Int32 = IpAddres.IpToUInt32(StopIP.Text);
-
-            if (StartIPv4_Int32 > EndIPv4_Int32)
-            {
-                uint xxx = StartIPv4_Int32;
-                StartIPv4_Int32 = EndIPv4_Int32;
-                EndIPv4_Int32 = xxx;
-            }
-
-            for (uint i = StartIPv4_Int32; i <= EndIPv4_Int32; i++)
-            {
-                listBox1.Items.Add(IpAddres.UInt32ToIp(i));
-                listBox1.Items.Add(IpAddres.NameComplex(IpAddres.UInt32ToIp(i)));
-            }
+            
 
 
 
@@ -125,6 +86,74 @@ namespace Updater
                     sw.Close();
                 }
             }
+        }
+
+        private void Search_Click(object sender, EventArgs e)
+        {
+            bool startIp = IpAddres.Check(StartIP.Text);
+            bool stopIp = IpAddres.Check(StopIP.Text);
+
+            string send = "";
+            if (!startIp)
+            {
+                send = $"Incorrect Start address: {StartIP.Text}";
+            }
+            if ((!startIp) & (!stopIp))
+            {
+                send += "\n";
+            }
+            if (!stopIp)
+            {
+                send += $"Incorrect Stop address: {StopIP.Text}";
+            }
+            if ((!startIp) | (!stopIp))
+            {
+                MessageBox.Show(send, "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
+            CheckboxColumn.Width = 25;
+            CheckboxColumn.TrueValue = true;
+            CheckboxColumn.FalseValue = false;
+            dataGridView.Columns.Add(CheckboxColumn);
+
+
+
+
+
+            dataGridView.Columns.Add("IP", "IP");
+            dataGridView.Columns[1].Width = 90;
+            dataGridView.Columns[1].ReadOnly = true;
+            dataGridView.Columns.Add("Name", "Name");
+            dataGridView.Columns[2].Width = 100;
+            dataGridView.Columns[2].ReadOnly = true;
+
+            label1.Text = IpAddres.IpToUInt32(StartIP.Text).ToString();
+            label2.Text = IpAddres.IpToUInt32(StopIP.Text).ToString();
+
+            uint StartIPv4_Int32 = IpAddres.IpToUInt32(StartIP.Text);
+            uint EndIPv4_Int32 = IpAddres.IpToUInt32(StopIP.Text);
+
+            if (StartIPv4_Int32 > EndIPv4_Int32)
+            {
+                uint xxx = StartIPv4_Int32;
+                StartIPv4_Int32 = EndIPv4_Int32;
+                EndIPv4_Int32 = xxx;
+            }
+
+            for (uint i = StartIPv4_Int32; i <= EndIPv4_Int32; i++)
+            {
+                int rowNumbe = dataGridView.Rows.Add();
+                dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+                dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+                dataGridView.Rows[rowNumbe].Cells[1].Value = IpAddres.UInt32ToIp(i);
+                dataGridView.Rows[rowNumbe].Cells[2].Value = IpAddres.NameComplex(IpAddres.UInt32ToIp(i));
+
+                //listBox1.Items.Add(IpAddres.UInt32ToIp(i));
+                //listBox1.Items.Add(IpAddres.NameComplex(IpAddres.UInt32ToIp(i)));
+            }
+
         }
     }
 }
