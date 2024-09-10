@@ -1,30 +1,34 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
 using System.Net;
+using System.Linq;
 using System.Text;
-using System.Web.Script.Serialization;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Web.Script.Serialization;
+
 
 namespace Updater
 {
     internal class SearchFactor
     {
-        public static uint IpToUInt32(string ipAddress)
+        public static List<string> computersList = new List<string>();
+
+        static uint IpToUInt32(string ipAddress)
         {
             return BitConverter.ToUInt32(IPAddress.Parse(ipAddress).GetAddressBytes().Reverse().ToArray(), 0);
         }
 
-        public static string UInt32ToIp(uint ipAddress)
+        static string UInt32ToIp(uint ipAddress)
         {
             return new IPAddress(BitConverter.GetBytes(ipAddress).Reverse().ToArray()).ToString();
         }
 
-        public static string NameComplex(string ip)
+        static async Task NameComplex(string ip)
         {
             string host = "IP is unavailable";
-            PingReply pr = new Ping().Send(ip, 5000);
+            PingReply pr = await new Ping().SendPingAsync(ip, 5000);
             if (pr.Status == IPStatus.Success)
             {
                 try
@@ -45,12 +49,12 @@ namespace Updater
                     host = "Not a Factor";
                 }
             }
-            return host;
+            Ui.DataGridFactorsAdd(ip, host);
         }
-
 
         public static void IpSearch(string Start_IP, string Stop_IP)
         {
+            computersList.Clear();
             uint StartIPv4_UInt32 = IpToUInt32(Start_IP);
             uint EndIPv4_UInt32 = IpToUInt32(Stop_IP);
 
@@ -61,24 +65,19 @@ namespace Updater
                 EndIPv4_UInt32 = xxx;
             }
 
-            Task[] tasks = new Task[EndIPv4_UInt32 - StartIPv4_UInt32 + 1];
-            int y = 0;
             for (uint i = StartIPv4_UInt32; i <= EndIPv4_UInt32; i++)
             {
-                tasks[y] = new Task(() =>
-                {
-                    Ui.DataGridFactorsAdd(UInt32ToIp(i), NameComplex(UInt32ToIp(i)));
-                });
-                tasks[y].Start();
-                y++;
+                computersList.Add(UInt32ToIp(i));
             }
 
-            Task t = Task.WhenAll(tasks);
-            try
+            Ui.SetMaxProgressBar(computersList.Count);
+
+            Task[] tasks = new Task[computersList.Count];
+            for (int i = 0; i < computersList.Count; i++)
             {
-                t.Wait();
+                tasks[i] = NameComplex(computersList.ElementAt<string>(i));
             }
-            catch { }
+            
         }
     }
 }

@@ -18,6 +18,40 @@ namespace Updater
             InitializeComponent();
         }
 
+        static void UiLock()
+        {
+            Fr.StartIP.Enabled = false;
+            Fr.StopIP.Enabled = false;
+            Fr.Search.Enabled = false;
+            Fr.Search.BackgroundImage = Properties.Resources.searchL;
+            Fr.textBox.Enabled = false;
+            Fr.checkBoxFolder.Enabled = false;
+            Fr.Selects.Enabled = false;
+            Fr.Selects.BackgroundImage = Properties.Resources.selectL;
+            Fr.Save.Enabled = false;
+            Fr.Save.BackgroundImage = Properties.Resources.saveL;
+            Fr.Updates.Enabled = false;
+            Fr.Updates.BackgroundImage = Properties.Resources.updateL;
+            Fr.dataGridView.Enabled = false;
+        }
+
+        static void UiUnLock()
+        {
+            Fr.StartIP.Enabled = true;
+            Fr.StopIP.Enabled = true;
+            Fr.Search.Enabled = true;
+            Fr.Search.BackgroundImage = Properties.Resources.search;
+            Fr.textBox.Enabled = true;
+            Fr.checkBoxFolder.Enabled = true;
+            Fr.Selects.Enabled = true;
+            Fr.Selects.BackgroundImage = Properties.Resources.select;
+            Fr.Save.Enabled = true;
+            Fr.Save.BackgroundImage = Properties.Resources.save;
+            Fr.Updates.Enabled = true;
+            Fr.Updates.BackgroundImage = Properties.Resources.update;
+            Fr.dataGridView.Enabled = true;
+        }
+
         public static void DataGridFactorsAdd(string ip, string name)
         {
             int rowNumbe = Fr.dataGridView.Rows.Add();
@@ -26,6 +60,19 @@ namespace Updater
             Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
             Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
             Fr.progressBar.PerformStep();
+            if (Fr.progressBar.Maximum == Fr.progressBar.Value)
+            {
+                UiUnLock();
+            }
+        }
+        public static void StepProgressBar()
+        {
+            Fr.progressBar.PerformStep();
+        }
+
+        public static void SetMaxProgressBar(int max)
+        {
+            Fr.progressBar.Maximum = max;    
         }
 
         void checkBoxFolder_CheckedChanged(object sender, EventArgs e)
@@ -58,8 +105,8 @@ namespace Updater
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     textBox.Text = openFileDialog.SafeFileName;
-                    labelTextBox.Text = openFileDialog.SafeFileName;
-                    filePath = openFileDialog.FileName;                  
+                    filePath = openFileDialog.FileName;
+                    label1.Text = filePath;
                 }
             }
         }
@@ -103,8 +150,12 @@ namespace Updater
             }
         }
 
-        private void Search_Click(object sender, EventArgs e)
+        void Search_Click(object sender, EventArgs e)
         {
+            progressBar.Value = 0;
+            dataGridView.Columns.Clear();
+            UiLock();
+
             bool startIp = IpAddres.Check(StartIP.Text);
             bool stopIp = IpAddres.Check(StopIP.Text);
 
@@ -141,10 +192,6 @@ namespace Updater
             dataGridView.Columns[2].ReadOnly = true;
 
             SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
-
-
         }
-
-        
     }
 }

@@ -90,6 +90,10 @@
     <None Include="Resources\update.png" />
     <None Include="Resources\select.png" />
     <None Include="Resources\search.png" />
+    <None Include="Resources\saveL.png" />
+    <None Include="Resources\searchL.png" />
+    <None Include="Resources\selectL.png" />
+    <None Include="Resources\updateL.png" />
     <Content Include="Updater.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
