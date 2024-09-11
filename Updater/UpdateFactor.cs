@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 namespace Updater
 {
@@ -120,16 +122,20 @@ namespace Updater
             return updateStatus;
         }
 
-        async Task UploadFactorAsyncFile(string ip, string filePath)
+        async Task UploadFactorAsyncFile(string ip, string file, int stroka)
         {
-            string status = "";
-            bool statusbool = true;
+            string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+            Ui.StatusDataGridView(stroka, fileName, "Check...");
+            string statusState = "";
+            bool statusload = false;
+            bool statusInstall = false;
+            bool statusJob = true;
             int attempts = 5;
             do
             {
-                status = await StateAsync(ip);
+                statusState = await StateAsync(ip);
 
-                if (status == "undefined" & attempts != 0 | status == "uploading" & attempts != 0)
+                if (statusState == "undefined" & attempts != 0 | statusState == "uploading" & attempts != 0)
                 {
                     await CancelAsync(ip);
                     attempts--;
@@ -137,44 +143,163 @@ namespace Updater
                 }
                 else
                 {
-                    statusbool = false;
+                    statusJob = false;
                 }
             }
-            while (statusbool);
+            while (statusJob);
 
-            if (status != "notStarted")
+            if (statusState != "notStarted")
+            {
+                Ui.StatusDataGridView(stroka, fileName, "Not Available...");
                 return;
+            }
+                
 
-            status = "";
-            statusbool = true;
+            Ui.StatusDataGridView(stroka, fileName, "Loading...");
+            statusJob = true;
             attempts = 5;
             do
             {
-                if (await UploadAsync(ip, filePath) & attempts != 0)
+                statusload = await UploadAsync(ip, file);
+
+                if (!statusload & attempts != 0)
                 {
-                    await CancelAsync(ip);
+                    //await CancelAsync(ip);
                     attempts--;
                     Thread.Sleep(500);
                 }
                 else
                 {
-                    statusbool = false;
+                    statusJob = false;
                 }
             }
-            while (statusbool);
-            
+            while (statusJob);
 
+            if (!statusload)
+            {
+                Ui.StatusDataGridView(stroka, fileName, "Not Loading...");
+                return;
+            }
 
+            Ui.StatusDataGridView(stroka, fileName, "Install...");
+            statusJob = true;
+            attempts = 5;
+            do
+            {
+                statusInstall = await InstallAsync(ip);
 
+                if (!statusInstall & attempts != 0)
+                {
+                    //await CancelAsync(ip);
+                    attempts--;
+                    Thread.Sleep(500);
+                }
+                else
+                {
+                    statusJob = false;
+                }
+            }
+            while (statusJob);
+
+            if (!statusInstall)
+            {
+                Ui.StatusDataGridView(stroka, fileName, "Not Install...");
+                return;
+            }
+
+            Ui.StatusDataGridView(stroka, fileName, "Installed");
         }
 
+        async Task UploadFactorAsyncFiles(string ip, string[] files, int stroka)
+        {
+            foreach (string file in files)
+            {
+                string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+                Ui.StatusDataGridView(stroka, fileName, "Check...");
+                string statusState = "";
+                bool statusload = false;
+                bool statusInstall = false;
+                bool statusJob = true;
+                int attempts = 5;
+                do
+                {
+                    statusState = await StateAsync(ip);
+
+                    if (statusState == "undefined" & attempts != 0 | statusState == "uploading" & attempts != 0)
+                    {
+                        await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
+
+                if (statusState != "notStarted")
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Available...");
+                    return;
+                }
 
 
+                Ui.StatusDataGridView(stroka, fileName, "Loading...");
+                statusJob = true;
+                attempts = 5;
+                do
+                {
+                    statusload = await UploadAsync(ip, file);
 
+                    if (!statusload & attempts != 0)
+                    {
+                        //await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
 
+                if (!statusload)
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Loading...");
+                    return;
+                }
 
+                Ui.StatusDataGridView(stroka, fileName, "Install...");
+                statusJob = true;
+                attempts = 5;
+                do
+                {
+                    statusInstall = await InstallAsync(ip);
 
+                    if (!statusInstall & attempts != 0)
+                    {
+                        //await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
 
+                if (!statusInstall)
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Install...");
+                    return;
+                }
 
+                Ui.StatusDataGridView(stroka, fileName, "Installed");
+
+            }
+        }
     }
 }
