@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Xml;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Web.Script.Serialization;
-using System.Threading;
-using System.Xml;
-using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 
 namespace Updater
@@ -17,6 +17,12 @@ namespace Updater
     internal class SearchFactor
     {
         public static List<string> computersList = new List<string>();
+
+        public static bool Check(string ip)
+        {
+            Regex regex = new Regex("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            return regex.IsMatch(ip);
+        }
 
         static uint IpToUInt32(string ipAddress)
         {
@@ -52,7 +58,7 @@ namespace Updater
                     host = "Not a Factor";
                 }
             }
-            Ui.StepProgressBar();
+            Ui.FactorsAdd(ip, host);
         }
 
         static void SearchFactors()
@@ -63,8 +69,10 @@ namespace Updater
                 tasks[i] = NameComplex(computersList.ElementAt<string>(i));
             }
             Task.WaitAll(tasks);
-            Ui.FullProgressBar();
             Ui.UiUnLock();
+            Ui.FullProgressBar();
+            Ui.AddDataGridView();
+            
         }
 
         public static void IpSearch(string Start_IP, string Stop_IP)
@@ -93,24 +101,25 @@ namespace Updater
             
         }
 
-        public static void dr(string file)
+        public static void Drop(string file)
         {
-            new Thread(() =>
+            computersList.Clear();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(file);
+            XmlElement xRoot = xDoc.DocumentElement;
+            if (xRoot != null)
             {
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(file);
-                XmlElement xRoot = xDoc.DocumentElement;
-                if (xRoot != null)
+                foreach (XmlElement xnode in xRoot)
                 {
-                    foreach (XmlElement xnode in xRoot)
+                    if (xnode.Name == "ip")
                     {
-                        if (xnode.Name == "ip")
+                        if (SearchFactor.Check(xnode.InnerText))
                         {
-                            computersList.Add(xnode.InnerText);                            
-                        }
+                            computersList.Add(xnode.InnerText);
+                        }                          
                     }
                 }
-            }).Start();
+            }
 
             Ui.SetMaxProgressBar(computersList.Count);
 

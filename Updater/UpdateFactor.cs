@@ -120,13 +120,16 @@ namespace Updater
             return updateStatus;
         }
 
-        async Task UploadFactorAsync(string ip, string filePath, int row, int column)
+        async Task UploadFactorAsyncFile(string ip, string filePath)
         {
-            bool status = true;
+            string status = "";
+            bool statusbool = true;
             int attempts = 5;
             do
             {
-                if (await StateAsync(ip) != "uploading" & attempts != 0)
+                status = await StateAsync(ip);
+
+                if (status == "undefined" & attempts != 0 | status == "uploading" & attempts != 0)
                 {
                     await CancelAsync(ip);
                     attempts--;
@@ -134,12 +137,16 @@ namespace Updater
                 }
                 else
                 {
-                    status = false;
+                    statusbool = false;
                 }
             }
-            while (status);
+            while (statusbool);
 
-            status = true;
+            if (status != "notStarted")
+                return;
+
+            status = "";
+            statusbool = true;
             attempts = 5;
             do
             {
@@ -151,10 +158,10 @@ namespace Updater
                 }
                 else
                 {
-                    status = false;
+                    statusbool = false;
                 }
             }
-            while (status);
+            while (statusbool);
             
 
 

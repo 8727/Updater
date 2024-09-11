@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 
 namespace Updater
@@ -9,9 +12,10 @@ namespace Updater
     public partial class Ui : Form
     {
         public static Ui Fr;
-        int filesUpdate = 100;
+
         string filePath = string.Empty;
-        //public static Hashtable Camera = new Hashtable();
+        public static Hashtable Camera = new Hashtable();
+
         public Ui()
         {
             Fr = this;
@@ -52,8 +56,9 @@ namespace Updater
             Fr.dataGridView.Enabled = true;
         }
 
-        public static void DataGridFactorsAdd(string ip, string name)
+        public static void FactorsAdd(string ip, string name)
         {
+            Camera.Add(ip, name);
             Fr.progressBar.PerformStep();
         }
 
@@ -72,13 +77,76 @@ namespace Updater
             Fr.progressBar.Value = Fr.progressBar.Maximum;    
         }
 
+        public static void AddDataGridView()
+        {
+            DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
+            CheckboxColumn.Width = 25;
+            CheckboxColumn.TrueValue = true;
+            CheckboxColumn.FalseValue = false;
+            Fr.dataGridView.Columns.Add(CheckboxColumn);
+
+            Fr.dataGridView.Columns.Add("IP", "IP");
+            Fr.dataGridView.Columns[1].Width = 90;
+            Fr.dataGridView.Columns[1].ReadOnly = true;
+            Fr.dataGridView.Columns.Add("Name", "Name");
+            Fr.dataGridView.Columns[2].Width = 100;
+            Fr.dataGridView.Columns[2].ReadOnly = true;
+
+            ICollection cameraKeys = Ui.Camera.Keys;
+            foreach (string ipCameraKey in cameraKeys)
+            {
+                int rowNumbe = Fr.dataGridView.Rows.Add();
+                Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+                Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
+                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Ui.Camera[ipCameraKey];
+            }
+        }
+
+        public static void StatusDataGridView(int stroka, string stolb, string status)
+        {
+            Fr.dataGridView.Rows[stroka].Cells[stolb].Value = status;
+
+            switch (status)
+            {
+                case "Check...":
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Gray;
+                    break;
+
+                case "Loading...":
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Yellow;
+                    break;
+
+                case "Install...":
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.LightGreen;
+                    break;
+
+                case "Installed":
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Green;
+                    break;
+
+                default:
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Red;
+                    break;
+            }
+        }
+
+        void AddFileDataGridView(string name)
+        {
+            int index = dataGridView.Columns.Count;
+            dataGridView.Columns.Add(name, name);
+            dataGridView.Columns[index].MinimumWidth = 100;
+            dataGridView.Columns[index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView.Columns[index].ReadOnly = true;
+        }
+
         void checkBoxFolder_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxFolder.Checked)
             {
                 Selects.Enabled = false;
-                string[] tempfiles = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
-                filesUpdate = tempfiles.Count();
+                string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
+                int filesUpdate = files.Count();
                 textBox.Text = $"{filesUpdate} files in the update folder.";
             }
             else
@@ -110,17 +178,32 @@ namespace Updater
 
         void Updates_Click(object sender, EventArgs e)
         {
+            
+
             UiLock();
             progressBar.Value = 0;
             if (dataGridView.RowCount != 0)
             {
                 if (checkBoxFolder.Checked)
                 {
-                    if(filesUpdate != 0)
+                    string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
+                    
+                    if (files.Count() != 0)
                     {
+                        foreach (string file in files)
+                        {
+                            AddFileDataGridView(file.Substring(file.LastIndexOf('\\') + 1));
+                        }
+
+                        foreach (DataGridViewRow row in dataGridView.Rows)
+                        {
+                                StatusDataGridView( row.Index, "Zabbix-agent2.tar.gz", "Installed");
 
 
 
+
+
+                        }
                     }
                     else
                     {
@@ -133,7 +216,12 @@ namespace Updater
                 {
                     if (filePath != "")
                     {
+                        AddFileDataGridView(textBox.Text);
+                        foreach (DataGridViewRow row in dataGridView.Rows)
+                        {
 
+
+                        }
 
 
                     }
@@ -188,8 +276,8 @@ namespace Updater
             progressBar.Value = 0;
             dataGridView.Columns.Clear();
 
-            bool startIp = IpAddres.Check(StartIP.Text);
-            bool stopIp = IpAddres.Check(StopIP.Text);
+            bool startIp = SearchFactor.Check(StartIP.Text);
+            bool stopIp = SearchFactor.Check(StopIP.Text);
 
             string send = "";
             if (!startIp)
@@ -209,38 +297,36 @@ namespace Updater
                 MessageBox.Show(send, "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
-            CheckboxColumn.Width = 25;
-            CheckboxColumn.TrueValue = true;
-            CheckboxColumn.FalseValue = false;
-            dataGridView.Columns.Add(CheckboxColumn);
-
-            dataGridView.Columns.Add("IP", "IP");
-            dataGridView.Columns[1].Width = 90;
-            dataGridView.Columns[1].ReadOnly = true;
-            dataGridView.Columns.Add("Name", "Name");
-            dataGridView.Columns[2].Width = 100;
-            dataGridView.Columns[2].ReadOnly = true;
+            Camera.Clear();
 
             SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
         }
 
         void Drop_DragEnter(object sender, DragEventArgs e)
         {
-            UiLock();
-            progressBar.Value = 0;
-            dataGridView.Columns.Clear();
-
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
 
         void Drop_DragDrop(object sender, DragEventArgs e)
         {
-            UiLock();
-            progressBar.Value = 0;
-            dataGridView.Columns.Clear();
+            foreach (string obj in (string[])e.Data.GetData(DataFormats.FileDrop))
+            {
+                if (!Directory.Exists(obj))
+                {
+                    if(obj.Substring(obj.LastIndexOf('.')) == ".xml")
+                    {
+                        UiLock();
 
+                        progressBar.Value = 0;
+                        dataGridView.Columns.Clear();
+                        Camera.Clear();
+                        SearchFactor.Drop(obj);
+                    }
+                }
+            }
         }
-
     }
 }
