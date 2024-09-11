@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 
@@ -56,17 +54,7 @@ namespace Updater
 
         public static void DataGridFactorsAdd(string ip, string name)
         {
-            //int rowNumbe = Fr.dataGridView.Rows.Add();
-            //Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
-            //Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
-            //Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
-            //Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
-            //Fr.label3.Text = (100 - Fr.progressBar.Value / Fr.progressBar.Maximum).ToString();
             Fr.progressBar.PerformStep();
-            //if (Fr.progressBar.Maximum == Fr.progressBar.Value)
-            //{
-            //    UiUnLock();
-            //}
         }
 
         public static void StepProgressBar()
@@ -76,7 +64,12 @@ namespace Updater
 
         public static void SetMaxProgressBar(int max)
         {
-            Fr.progressBar.Maximum = max;    
+            Fr.progressBar.Maximum = max;
+        }
+
+        public static void FullProgressBar()
+        {
+            Fr.progressBar.Value = Fr.progressBar.Maximum;    
         }
 
         void checkBoxFolder_CheckedChanged(object sender, EventArgs e)
@@ -232,5 +225,22 @@ namespace Updater
 
             SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
         }
+
+        void Drop_DragEnter(object sender, DragEventArgs e)
+        {
+            UiLock();
+            progressBar.Value = 0;
+            dataGridView.Columns.Clear();
+
+        }
+
+        void Drop_DragDrop(object sender, DragEventArgs e)
+        {
+            UiLock();
+            progressBar.Value = 0;
+            dataGridView.Columns.Clear();
+
+        }
+
     }
 }

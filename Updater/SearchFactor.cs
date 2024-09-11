@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Web.Script.Serialization;
 using System.Threading;
+using System.Xml;
+using System.Windows.Forms;
 
 
 namespace Updater
@@ -50,7 +52,7 @@ namespace Updater
                     host = "Not a Factor";
                 }
             }
-            Ui.DataGridFactorsAdd(ip, host);
+            Ui.StepProgressBar();
         }
 
         static void SearchFactors()
@@ -61,7 +63,8 @@ namespace Updater
                 tasks[i] = NameComplex(computersList.ElementAt<string>(i));
             }
             Task.WaitAll(tasks);
-           Ui.UiUnLock();
+            Ui.FullProgressBar();
+            Ui.UiUnLock();
         }
 
         public static void IpSearch(string Start_IP, string Stop_IP)
@@ -88,6 +91,32 @@ namespace Updater
                 SearchFactors();
             }).Start();
             
+        }
+
+        public static void dr(string file)
+        {
+            new Thread(() =>
+            {
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(file);
+                XmlElement xRoot = xDoc.DocumentElement;
+                if (xRoot != null)
+                {
+                    foreach (XmlElement xnode in xRoot)
+                    {
+                        if (xnode.Name == "ip")
+                        {
+                            computersList.Add(xnode.InnerText);                            
+                        }
+                    }
+                }
+            }).Start();
+
+            Ui.SetMaxProgressBar(computersList.Count);
+
+            new Thread(() => {
+                SearchFactors();
+            }).Start();
         }
     }
 }

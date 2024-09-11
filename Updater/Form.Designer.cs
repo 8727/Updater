@@ -30,22 +30,22 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.RangeIP = new System.Windows.Forms.GroupBox();
+            this.Search = new System.Windows.Forms.Button();
             this.StopIP = new System.Windows.Forms.TextBox();
             this.StartIP = new System.Windows.Forms.TextBox();
             this.LebelStopIP = new System.Windows.Forms.Label();
             this.LebelStartIP = new System.Windows.Forms.Label();
             this.checkBoxFolder = new System.Windows.Forms.CheckBox();
             this.UpdateFile = new System.Windows.Forms.GroupBox();
+            this.Selects = new System.Windows.Forms.Button();
             this.textBox = new System.Windows.Forms.TextBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.Updater = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.Selects = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
             this.Updates = new System.Windows.Forms.Button();
-            this.Search = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.RangeIP.SuspendLayout();
             this.UpdateFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -66,6 +66,22 @@
             this.RangeIP.Size = new System.Drawing.Size(336, 100);
             this.RangeIP.TabIndex = 1;
             this.RangeIP.TabStop = false;
+            // 
+            // Search
+            // 
+            this.Search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Search.BackgroundImage = global::Updater.Properties.Resources.search;
+            this.Search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Search.FlatAppearance.BorderSize = 0;
+            this.Search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Search.Location = new System.Drawing.Point(250, 13);
+            this.Search.Margin = new System.Windows.Forms.Padding(5);
+            this.Search.Name = "Search";
+            this.Search.Size = new System.Drawing.Size(80, 80);
+            this.Search.TabIndex = 7;
+            this.Search.UseVisualStyleBackColor = false;
+            this.Search.Click += new System.EventHandler(this.Search_Click);
             // 
             // StopIP
             // 
@@ -134,6 +150,23 @@
             this.UpdateFile.TabIndex = 4;
             this.UpdateFile.TabStop = false;
             // 
+            // Selects
+            // 
+            this.Selects.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Selects.BackgroundImage = global::Updater.Properties.Resources.select;
+            this.Selects.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Selects.FlatAppearance.BorderSize = 0;
+            this.Selects.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Selects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Selects.Location = new System.Drawing.Point(375, 13);
+            this.Selects.Margin = new System.Windows.Forms.Padding(5);
+            this.Selects.Name = "Selects";
+            this.Selects.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Selects.Size = new System.Drawing.Size(80, 80);
+            this.Selects.TabIndex = 6;
+            this.Selects.UseVisualStyleBackColor = false;
+            this.Selects.Click += new System.EventHandler(this.Selects_Click);
+            // 
             // textBox
             // 
             this.textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -158,6 +191,8 @@
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.Size = new System.Drawing.Size(1567, 551);
             this.dataGridView.TabIndex = 5;
+            this.dataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.Drop_DragDrop);
+            this.dataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.Drop_DragEnter);
             // 
             // progressBar
             // 
@@ -178,43 +213,6 @@
             this.Updater.Size = new System.Drawing.Size(192, 100);
             this.Updater.TabIndex = 3;
             this.Updater.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(629, 210);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 20);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "label1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(629, 238);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 20);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "label2";
-            // 
-            // Selects
-            // 
-            this.Selects.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Selects.BackgroundImage = global::Updater.Properties.Resources.select;
-            this.Selects.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Selects.FlatAppearance.BorderSize = 0;
-            this.Selects.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Selects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Selects.Location = new System.Drawing.Point(375, 13);
-            this.Selects.Margin = new System.Windows.Forms.Padding(5);
-            this.Selects.Name = "Selects";
-            this.Selects.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Selects.Size = new System.Drawing.Size(80, 80);
-            this.Selects.TabIndex = 6;
-            this.Selects.UseVisualStyleBackColor = false;
-            this.Selects.Click += new System.EventHandler(this.Selects_Click);
             // 
             // Save
             // 
@@ -248,28 +246,32 @@
             this.Updates.UseVisualStyleBackColor = false;
             this.Updates.Click += new System.EventHandler(this.Updates_Click);
             // 
-            // Search
+            // label1
             // 
-            this.Search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Search.BackgroundImage = global::Updater.Properties.Resources.search;
-            this.Search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Search.FlatAppearance.BorderSize = 0;
-            this.Search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Search.Location = new System.Drawing.Point(250, 13);
-            this.Search.Margin = new System.Windows.Forms.Padding(5);
-            this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(80, 80);
-            this.Search.TabIndex = 7;
-            this.Search.UseVisualStyleBackColor = false;
-            this.Search.Click += new System.EventHandler(this.Search_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(629, 210);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 20);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(629, 238);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 20);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "label2";
             // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(1584, 668);
+            this.ClientSize = new System.Drawing.Size(1584, 672);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.progressBar);
