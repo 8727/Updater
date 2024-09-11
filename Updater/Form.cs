@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -11,14 +12,15 @@ namespace Updater
     {
         public static Ui Fr;
         int filesUpdate = 100;
-        public static Hashtable Camera = new Hashtable();
+        string filePath = string.Empty;
+        //public static Hashtable Camera = new Hashtable();
         public Ui()
         {
             Fr = this;
             InitializeComponent();
         }
 
-        static void UiLock()
+        public static void UiLock()
         {
             Fr.StartIP.Enabled = false;
             Fr.StopIP.Enabled = false;
@@ -35,7 +37,7 @@ namespace Updater
             Fr.dataGridView.Enabled = false;
         }
 
-        static void UiUnLock()
+        public static void UiUnLock()
         {
             Fr.StartIP.Enabled = true;
             Fr.StopIP.Enabled = true;
@@ -54,17 +56,19 @@ namespace Updater
 
         public static void DataGridFactorsAdd(string ip, string name)
         {
-            int rowNumbe = Fr.dataGridView.Rows.Add();
-            Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
-            Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
-            Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
-            Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
+            //int rowNumbe = Fr.dataGridView.Rows.Add();
+            //Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+            //Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+            //Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ip;
+            //Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = name;
+            //Fr.label3.Text = (100 - Fr.progressBar.Value / Fr.progressBar.Maximum).ToString();
             Fr.progressBar.PerformStep();
-            if (Fr.progressBar.Maximum == Fr.progressBar.Value)
-            {
-                UiUnLock();
-            }
+            //if (Fr.progressBar.Maximum == Fr.progressBar.Value)
+            //{
+            //    UiUnLock();
+            //}
         }
+
         public static void StepProgressBar()
         {
             Fr.progressBar.PerformStep();
@@ -94,7 +98,7 @@ namespace Updater
 
         void Selects_Click(object sender, EventArgs e)
         {
-            var filePath = string.Empty;
+            
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -113,13 +117,47 @@ namespace Updater
 
         void Updates_Click(object sender, EventArgs e)
         {
-            
+            UiLock();
+            progressBar.Value = 0;
+            if (dataGridView.RowCount != 0)
+            {
+                if (checkBoxFolder.Checked)
+                {
+                    if(filesUpdate != 0)
+                    {
 
 
 
+                    }
+                    else
+                    {
+                        MessageBox.Show("nonnno", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        UiUnLock();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (filePath != "")
+                    {
 
 
 
+                    }
+                    else
+                    {
+                        MessageBox.Show("nonnno", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        UiUnLock();
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("ertyui", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UiUnLock();
+                return;
+            }
         }
 
         void Save_Click(object sender, EventArgs e)
@@ -152,9 +190,10 @@ namespace Updater
 
         void Search_Click(object sender, EventArgs e)
         {
+            UiLock();
+
             progressBar.Value = 0;
             dataGridView.Columns.Clear();
-            UiLock();
 
             bool startIp = IpAddres.Check(StartIP.Text);
             bool stopIp = IpAddres.Check(StopIP.Text);

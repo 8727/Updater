@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Web.Script.Serialization;
+using System.Threading;
 
 
 namespace Updater
@@ -52,6 +53,17 @@ namespace Updater
             Ui.DataGridFactorsAdd(ip, host);
         }
 
+        static void SearchFactors()
+        {
+            Task[] tasks = new Task[computersList.Count];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = NameComplex(computersList.ElementAt<string>(i));
+            }
+            Task.WaitAll(tasks);
+           Ui.UiUnLock();
+        }
+
         public static void IpSearch(string Start_IP, string Stop_IP)
         {
             computersList.Clear();
@@ -72,11 +84,9 @@ namespace Updater
 
             Ui.SetMaxProgressBar(computersList.Count);
 
-            Task[] tasks = new Task[computersList.Count];
-            for (int i = 0; i < computersList.Count; i++)
-            {
-                tasks[i] = NameComplex(computersList.ElementAt<string>(i));
-            }
+            new Thread(() => {
+                SearchFactors();
+            }).Start();
             
         }
     }
