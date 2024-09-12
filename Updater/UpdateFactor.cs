@@ -3,8 +3,8 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
+using System.Web.Script.Serialization;
 
 namespace Updater
 {
