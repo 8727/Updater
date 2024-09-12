@@ -3,9 +3,8 @@ using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
+
 
 
 namespace Updater
@@ -60,11 +59,6 @@ namespace Updater
         public static void FactorsAdd(string ip, string name)
         {
             Camera.Add(ip, name);
-            Fr.progressBar.PerformStep();
-        }
-
-        public static void StepProgressBar()
-        {
             Fr.progressBar.PerformStep();
         }
 
@@ -160,8 +154,6 @@ namespace Updater
 
         void Selects_Click(object sender, EventArgs e)
         {
-            
-
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Application.StartupPath.ToString();
@@ -172,15 +164,12 @@ namespace Updater
                 {
                     textBox.Text = openFileDialog.SafeFileName;
                     filePath = openFileDialog.FileName;
-                    label1.Text = filePath;
                 }
             }
         }
 
-        void Updates_Click(object sender, EventArgs e)
+        async void Updates_Click(object sender, EventArgs e)
         {
-            
-
             UiLock();
             progressBar.Value = 0;
             if (dataGridView.RowCount != 0)
@@ -196,13 +185,16 @@ namespace Updater
                             AddFileDataGridView(file.Substring(file.LastIndexOf('\\') + 1));
                         }
 
+                        progressBar.Maximum = dataGridView.Rows.Count * files.Count();
+                        foreach (DataGridViewRow row in dataGridView.Rows)
+                        {
+                            foreach (string file in files)
+                            {
+                                await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), file, row.Index);
+                                progressBar.PerformStep();
+                            }
+                        }
 
-                        int t = dataGridView.Rows.Count;
-
-                        //Parallel.For(0, t, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, Square);
-
-                        label1.Text = t.ToString();
-                        
                     }
                     else
                     {
@@ -216,13 +208,13 @@ namespace Updater
                     if (filePath != "")
                     {
                         AddFileDataGridView(textBox.Text);
+                        progressBar.Maximum = dataGridView.Rows.Count;
+
                         foreach (DataGridViewRow row in dataGridView.Rows)
                         {
-
-
+                            await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                            progressBar.PerformStep();
                         }
-
-
                     }
                     else
                     {
@@ -238,6 +230,9 @@ namespace Updater
                 UiUnLock();
                 return;
             }
+
+            progressBar.Value = progressBar.Maximum;
+            UiUnLock();
         }
 
         void Save_Click(object sender, EventArgs e)
