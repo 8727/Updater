@@ -35,8 +35,8 @@ namespace Updater
             Fr.checkBoxFolder.Enabled = false;
             Fr.Selects.Enabled = false;
             Fr.Selects.BackgroundImage = Properties.Resources.selectL;
-            Fr.Save.Enabled = false;
-            Fr.Save.BackgroundImage = Properties.Resources.saveL;
+            //Fr.Save.Enabled = false;
+            //Fr.Save.BackgroundImage = Properties.Resources.saveL;
             Fr.Updates.Enabled = false;
             Fr.Updates.BackgroundImage = Properties.Resources.updateL;
             Fr.dataGridView.Enabled = false;
@@ -52,8 +52,8 @@ namespace Updater
             Fr.checkBoxFolder.Enabled = true;
             Fr.Selects.Enabled = true;
             Fr.Selects.BackgroundImage = Properties.Resources.select;
-            Fr.Save.Enabled = true;
-            Fr.Save.BackgroundImage = Properties.Resources.save;
+            //Fr.Save.Enabled = true;
+            //Fr.Save.BackgroundImage = Properties.Resources.save;
             Fr.Updates.Enabled = true;
             Fr.Updates.BackgroundImage = Properties.Resources.update;
             Fr.dataGridView.Enabled = true;

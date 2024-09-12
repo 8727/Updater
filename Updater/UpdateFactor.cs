@@ -44,23 +44,46 @@ namespace Updater
             {
                 using (var httpClient = new HttpClient())
                 {
-                    httpClient.Timeout = TimeSpan.FromMinutes(Ui.loadingTimeOut);
-                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/upload"))
-                    {
-                        request.Headers.TryAddWithoutValidation("accept", "*/*");
-                        var multipartContent = new MultipartFormDataContent();
-                        var file = new ByteArrayContent(File.ReadAllBytes(filePath));
-                        file.Headers.Add("Content-Type", "application/x-gzip");
-                        multipartContent.Add(file, "file", Path.GetFileName(filePath));
-                        request.Content = multipartContent;
+                    httpClient.Timeout = TimeSpan.FromMinutes(30);
 
-                        var response = await httpClient.SendAsync(request);
-                        if (response.StatusCode.ToString() == "OK")
+                    var fileStream = File.OpenRead(filePath);
+                    var request = new HttpRequestMessage
+                    {
+                        RequestUri = new Uri($"http://{ipAddress}/updater/upload"),
+                        Method = HttpMethod.Post,
+                        Content = new MultipartFormDataContent
                         {
-                            updateStatus = true;
+                            {
+                                new StreamContent(fileStream), "file", Path.GetFileName(filePath)
+                            }
                         }
+                    };
+                    var response = await httpClient.SendAsync(request);
+                    if (response.StatusCode.ToString() == "OK")
+                    {
+                        updateStatus = true;
                     }
                 }
+
+                //using (var httpClient = new HttpClient())
+                //{
+                //    httpClient.Timeout = TimeSpan.FromMinutes(Ui.loadingTimeOut);
+                //    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/upload"))
+                //    {
+                //        request.Headers.TryAddWithoutValidation("accept", "*/*");
+                //        var multipartContent = new MultipartFormDataContent();
+                //        var file = new ByteArrayContent(File.ReadAllBytes(filePath));
+                //        file.Headers.Add("Content-Type", "application/x-gzip");
+                //        multipartContent.Add(file, "file", Path.GetFileName(filePath));
+                //        request.Content = multipartContent;
+
+                //        var response = await httpClient.SendAsync(request);
+                //        if (response.StatusCode.ToString() == "OK")
+                //        {
+                //            updateStatus = true;
+                //        }
+                //    }
+                //}
             }
             catch
             {
