@@ -190,6 +190,7 @@ namespace Updater
                         }
 
                         progressBar.Maximum = dataGridView.Rows.Count * files.Count();
+
                         foreach (DataGridViewRow row in dataGridView.Rows)
                         {
                             foreach (string file in files)
@@ -198,7 +199,6 @@ namespace Updater
                                 progressBar.PerformStep();
                             }
                         }
-
                     }
                     else
                     {
@@ -214,19 +214,11 @@ namespace Updater
                         AddFileDataGridView(textBox.Text);
                         progressBar.Maximum = dataGridView.Rows.Count;
 
-
-                        Parallel.For(0, dataGridView.Rows.Count, new ParallelOptions { MaxDegreeOfParallelism = 2 }, (row) =>
+                        foreach (DataGridViewRow row in dataGridView.Rows)
                         {
-                           _ = UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
+                            await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
                             progressBar.PerformStep();
-                        }); 
-
-
-                        //foreach (DataGridViewRow row in dataGridView.Rows)
-                        //{
-                        //    await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
-                        //    progressBar.PerformStep();
-                        //}
+                        }
                     }
                     else
                     {
