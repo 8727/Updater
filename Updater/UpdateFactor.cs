@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
-using System;
 
 namespace Updater
 {
@@ -64,26 +64,6 @@ namespace Updater
                         updateStatus = true;
                     }
                 }
-
-                //using (var httpClient = new HttpClient())
-                //{
-                //    httpClient.Timeout = TimeSpan.FromMinutes(Ui.loadingTimeOut);
-                //    using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/upload"))
-                //    {
-                //        request.Headers.TryAddWithoutValidation("accept", "*/*");
-                //        var multipartContent = new MultipartFormDataContent();
-                //        var file = new ByteArrayContent(File.ReadAllBytes(filePath));
-                //        file.Headers.Add("Content-Type", "application/x-gzip");
-                //        multipartContent.Add(file, "file", Path.GetFileName(filePath));
-                //        request.Content = multipartContent;
-
-                //        var response = await httpClient.SendAsync(request);
-                //        if (response.StatusCode.ToString() == "OK")
-                //        {
-                //            updateStatus = true;
-                //        }
-                //    }
-                //}
             }
             catch
             {

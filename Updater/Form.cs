@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -213,11 +214,19 @@ namespace Updater
                         AddFileDataGridView(textBox.Text);
                         progressBar.Maximum = dataGridView.Rows.Count;
 
-                        foreach (DataGridViewRow row in dataGridView.Rows)
+
+                        Parallel.For(0, dataGridView.Rows.Count, new ParallelOptions { MaxDegreeOfParallelism = 2 }, async (row) =>
                         {
-                            await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                            await UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
                             progressBar.PerformStep();
-                        }
+                        }); 
+
+
+                        //foreach (DataGridViewRow row in dataGridView.Rows)
+                        //{
+                        //    await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                        //    progressBar.PerformStep();
+                        //}
                     }
                     else
                     {
@@ -325,5 +334,12 @@ namespace Updater
                 }
             }
         }
+
+
+        //async void SquareAsync(int row)
+        //{
+        //    await UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
+        //    progressBar.PerformStep();
+        //}
     }
 }
