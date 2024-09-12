@@ -3,7 +3,6 @@ using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -96,9 +95,15 @@ namespace Updater
             {
                 int rowNumbe = Fr.dataGridView.Rows.Add();
                 Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
-                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = true;
+
+                bool status = true;
+                if (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor")
+                {
+                    status = false;
+                }
+                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = status;
                 Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
-                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Ui.Camera[ipCameraKey];
+                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
             }
         }
 
@@ -195,14 +200,17 @@ namespace Updater
                         {
                             foreach (string file in files)
                             {
-                                await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), file, row.Index);
+                                if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
+                                {
+                                    await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), file, row.Index);
+                                }
                                 progressBar.PerformStep();
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("nonnno", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("No file to update", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         UiUnLock();
                         return;
                     }
@@ -216,13 +224,16 @@ namespace Updater
 
                         foreach (DataGridViewRow row in dataGridView.Rows)
                         {
-                            await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                            if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
+                            {
+                                await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                            }
                             progressBar.PerformStep();
                         }
                     }
                     else
                     {
-                        MessageBox.Show("nonnno", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("No file to update", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         UiUnLock();
                         return;
                     }
@@ -230,7 +241,7 @@ namespace Updater
             }
             else
             {
-                MessageBox.Show("ertyui", "IP address", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There are no complexes to update.", "Complexes to update", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 UiUnLock();
                 return;
             }
@@ -326,12 +337,5 @@ namespace Updater
                 }
             }
         }
-
-
-        //async void SquareAsync(int row)
-        //{
-        //    await UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
-        //    progressBar.PerformStep();
-        //}
     }
 }
