@@ -215,9 +215,9 @@ namespace Updater
                         progressBar.Maximum = dataGridView.Rows.Count;
 
 
-                        Parallel.For(0, dataGridView.Rows.Count, new ParallelOptions { MaxDegreeOfParallelism = 2 }, async (row) =>
+                        Parallel.For(0, dataGridView.Rows.Count, new ParallelOptions { MaxDegreeOfParallelism = 2 }, (row) =>
                         {
-                            await UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
+                           _ = UpdateFactor.SingleFile(dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
                             progressBar.PerformStep();
                         }); 
 
