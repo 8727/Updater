@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -195,15 +196,13 @@ namespace Updater
                             AddFileDataGridView(file.Substring(file.LastIndexOf('\\') + 1));
                         }
 
-                        foreach (DataGridViewRow row in dataGridView.Rows)
-                        {
-                                StatusDataGridView( row.Index, "Zabbix-agent2.tar.gz", "Installed");
 
+                        int t = dataGridView.Rows.Count;
 
+                        //Parallel.For(0, t, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, Square);
 
-
-
-                        }
+                        label1.Text = t.ToString();
+                        
                     }
                     else
                     {
