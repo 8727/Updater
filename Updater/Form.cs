@@ -14,6 +14,9 @@ namespace Updater
         public static Ui Fr;
 
         string filePath = string.Empty;
+
+        public static UInt32 loadingTimeOut = 120;
+
         public static Hashtable Camera = new Hashtable();
 
         public Ui()

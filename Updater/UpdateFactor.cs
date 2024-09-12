@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
+using System;
 
 namespace Updater
 {
@@ -43,6 +44,7 @@ namespace Updater
             {
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.Timeout = TimeSpan.FromMinutes(Ui.loadingTimeOut);
                     using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/upload"))
                     {
                         request.Headers.TryAddWithoutValidation("accept", "*/*");
@@ -74,6 +76,7 @@ namespace Updater
             {
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.Timeout = TimeSpan.FromMinutes(Ui.loadingTimeOut);
                     using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"http://{ipAddress}/updater/install"))
                     {
                         request.Headers.TryAddWithoutValidation("accept", "text/plain");
