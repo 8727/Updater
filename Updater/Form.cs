@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Drawing;
+using System.Collections;
 using System.Windows.Forms;
-
-
 
 namespace Updater
 {
@@ -247,6 +245,25 @@ namespace Updater
             }
 
             progressBar.Value = progressBar.Maximum;
+
+            string fileName = "Updates result " + DateTime.Now.ToString("dd.MM.yyyy HH.mm");
+            FileInfo fil = new FileInfo(Application.StartupPath + "\\" + fileName + ".csv");
+            using (StreamWriter sw = fil.AppendText())
+            {
+                var headers = dataGridView.Columns.Cast<DataGridViewColumn>();
+                sw.WriteLine(string.Join(";", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()));
+                sw.Close();
+            }
+            using (StreamWriter sw = fil.AppendText())
+            {
+                foreach (DataGridViewRow row in dataGridView.Rows)
+                {
+                    var cells = row.Cells.Cast<DataGridViewCell>();
+                    sw.WriteLine(string.Join(";", cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
+                }
+                sw.Close();
+            }
+
             UiUnLock();
         }
 
@@ -255,7 +272,7 @@ namespace Updater
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = Application.StartupPath;
             saveFileDialog.Filter = "CSV|*.csv";
-            saveFileDialog.FileName = "Updates " + DateTime.Now.ToString("dd.MM.yyyy HH.mm");
+            saveFileDialog.FileName = "Updates result " + DateTime.Now.ToString("dd.MM.yyyy HH.mm");
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
