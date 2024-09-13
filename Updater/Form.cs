@@ -4,6 +4,10 @@ using System.Linq;
 using System.Drawing;
 using System.Collections;
 using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+using System.Collections.Generic;
 
 namespace Updater
 {
@@ -193,17 +197,16 @@ namespace Updater
                         }
 
                         progressBar.Maximum = dataGridView.Rows.Count * files.Count();
-
+                        SemaphoreSlim semaphore = new SemaphoreSlim(1);
+                        List<Task> tasks = new List<Task>();
                         foreach (DataGridViewRow row in dataGridView.Rows)
                         {
-                            foreach (string file in files)
+                            if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
                             {
-                                if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
-                                {
-                                    await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), file, row.Index);
-                                }
-                                progressBar.PerformStep();
+                                tasks.Add(() =>  UpdateFactor.Files(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), files, row.Index, semaphore));
                             }
+                            //progressBar.PerformStep();
+                            await Task.WhenAll(tasks);
                         }
                     }
                     else

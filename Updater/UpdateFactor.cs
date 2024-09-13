@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Web.Script.Serialization;
+using static System.Net.WebRequestMethods;
 
 namespace Updater
 {
@@ -216,6 +217,104 @@ namespace Updater
 
             Ui.StatusDataGridView(stroka, fileName, "Installed");
             //Ui.StepProgressBar();
+
+            return false;
+        }
+
+        public static async Task<bool> Files(string ip, string[] files, int stroka, Semaphore semaphore)
+        {
+            await semaphore.WaitAsync();
+            foreach (string file in files)
+            {
+                string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+                Ui.StatusDataGridView(stroka, fileName, "Check...");
+                string statusState = "";
+                bool statusload = false;
+                bool statusInstall = false;
+                bool statusJob = true;
+                int attempts = 5;
+                do
+                {
+                    statusState = await StateAsync(ip);
+
+                    if (statusState == "undefined" & attempts != 0 | statusState == "uploading" & attempts != 0)
+                    {
+                        await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
+
+                if (statusState != "notStarted")
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Available...");
+                    //Ui.StepProgressBar();
+                    return true;
+                }
+
+
+                Ui.StatusDataGridView(stroka, fileName, "Loading...");
+                statusJob = true;
+                attempts = 5;
+                do
+                {
+                    statusload = await UploadAsync(ip, file);
+
+                    if (!statusload & attempts != 0)
+                    {
+                        //await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
+
+                if (!statusload)
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Loading...");
+                    //Ui.StepProgressBar();
+                    return true;
+                }
+
+                Ui.StatusDataGridView(stroka, fileName, "Install...");
+                statusJob = true;
+                attempts = 5;
+                do
+                {
+                    statusInstall = await InstallAsync(ip);
+
+                    if (!statusInstall & attempts != 0)
+                    {
+                        //await CancelAsync(ip);
+                        attempts--;
+                        Thread.Sleep(500);
+                    }
+                    else
+                    {
+                        statusJob = false;
+                    }
+                }
+                while (statusJob);
+
+                if (!statusInstall)
+                {
+                    Ui.StatusDataGridView(stroka, fileName, "Not Install...");
+                    //Ui.StepProgressBar();
+                    return true;
+                }
+
+                Ui.StatusDataGridView(stroka, fileName, "Installed");
+                //Ui.StepProgressBar();
+            }
 
             return false;
         }
