@@ -17,7 +17,7 @@ namespace Updater
 
         public static UInt32 loadingTimeOut = 120;
 
-        public static int maxParallelism = 5;
+        //public static int maxParallelism = 5;
 
         public bool menuEnable = true;
 
@@ -44,6 +44,7 @@ namespace Updater
             //Fr.Save.BackgroundImage = Properties.Resources.saveL;
             //Fr.Updates.Enabled = false;
             //Fr.Updates.BackgroundImage = Properties.Resources.updateL;
+            Fr.maxParallelism.Enabled = false;
             Fr.dataGridView.Enabled = false;
         }
 
@@ -62,6 +63,7 @@ namespace Updater
             //Fr.Save.BackgroundImage = Properties.Resources.save;
             //Fr.Updates.Enabled = true;
             //Fr.Updates.BackgroundImage = Properties.Resources.update;
+            Fr.maxParallelism.Enabled = true;
             Fr.dataGridView.Enabled = true;
         }
 
@@ -221,7 +223,7 @@ namespace Updater
 
                         progressBar.Maximum = dataGridView.Rows.Count * files.Count();
 
-                        var resource = new SemaphoreSlim(maxParallelism, maxParallelism);
+                        var resource = new SemaphoreSlim(maxParallelism.Value, maxParallelism.Value);
 
                         var tasks = Enumerable.Range(0, dataGridView.Rows.Count).Select(async row =>
                         {
@@ -253,7 +255,7 @@ namespace Updater
                         AddFileDataGridView(textBox.Text);
                         progressBar.Maximum = dataGridView.Rows.Count;
 
-                        var resource = new SemaphoreSlim(maxParallelism, maxParallelism);
+                        var resource = new SemaphoreSlim(maxParallelism.Value, maxParallelism.Value);
 
                         var tasks = Enumerable.Range(0, dataGridView.Rows.Count).Select(async row =>
                         {

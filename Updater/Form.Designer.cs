@@ -44,10 +44,12 @@
             this.Updater = new System.Windows.Forms.GroupBox();
             this.Save = new System.Windows.Forms.Button();
             this.Updates = new System.Windows.Forms.Button();
+            this.maxParallelism = new System.Windows.Forms.TrackBar();
             this.RangeIP.SuspendLayout();
             this.UpdateFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.Updater.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxParallelism)).BeginInit();
             this.SuspendLayout();
             // 
             // RangeIP
@@ -199,9 +201,9 @@
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(1035, 12);
+            this.progressBar.Location = new System.Drawing.Point(1087, 12);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(540, 83);
+            this.progressBar.Size = new System.Drawing.Size(488, 83);
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 6;
             // 
@@ -247,12 +249,25 @@
             this.Updates.UseVisualStyleBackColor = false;
             this.Updates.Click += new System.EventHandler(this.Updates_Click);
             // 
+            // maxParallelism
+            // 
+            this.maxParallelism.AutoSize = false;
+            this.maxParallelism.Location = new System.Drawing.Point(1040, 2);
+            this.maxParallelism.Minimum = 1;
+            this.maxParallelism.Name = "maxParallelism";
+            this.maxParallelism.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.maxParallelism.Size = new System.Drawing.Size(29, 102);
+            this.maxParallelism.TabIndex = 7;
+            this.maxParallelism.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.maxParallelism.Value = 5;
+            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1584, 672);
+            this.Controls.Add(this.maxParallelism);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.UpdateFile);
@@ -269,6 +284,7 @@
             this.UpdateFile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.Updater.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.maxParallelism)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -290,6 +306,7 @@
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button Search;
+        private System.Windows.Forms.TrackBar maxParallelism;
     }
 }
 
