@@ -6,8 +6,6 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
-using System.Collections.Generic;
 
 namespace Updater
 {
@@ -19,6 +17,10 @@ namespace Updater
 
         public static UInt32 loadingTimeOut = 120;
 
+        public static int maxParallelism = 5;
+
+        public bool menuEnable = true;
+
         public static Hashtable Camera = new Hashtable();
 
         public Ui()
@@ -29,35 +31,37 @@ namespace Updater
 
         public static void UiLock()
         {
+            Fr.menuEnable = false;
             Fr.StartIP.Enabled = false;
             Fr.StopIP.Enabled = false;
-            Fr.Search.Enabled = false;
-            Fr.Search.BackgroundImage = Properties.Resources.searchL;
+            //Fr.Search.Enabled = false;
+            //Fr.Search.BackgroundImage = Properties.Resources.searchL;
             Fr.textBox.Enabled = false;
             Fr.checkBoxFolder.Enabled = false;
-            Fr.Selects.Enabled = false;
-            Fr.Selects.BackgroundImage = Properties.Resources.selectL;
+            //Fr.Selects.Enabled = false;
+            //Fr.Selects.BackgroundImage = Properties.Resources.selectL;
             //Fr.Save.Enabled = false;
             //Fr.Save.BackgroundImage = Properties.Resources.saveL;
-            Fr.Updates.Enabled = false;
-            Fr.Updates.BackgroundImage = Properties.Resources.updateL;
+            //Fr.Updates.Enabled = false;
+            //Fr.Updates.BackgroundImage = Properties.Resources.updateL;
             Fr.dataGridView.Enabled = false;
         }
 
         public static void UiUnLock()
         {
+            Fr.menuEnable = true;
             Fr.StartIP.Enabled = true;
             Fr.StopIP.Enabled = true;
-            Fr.Search.Enabled = true;
-            Fr.Search.BackgroundImage = Properties.Resources.search;
+            //Fr.Search.Enabled = true;
+            //Fr.Search.BackgroundImage = Properties.Resources.search;
             Fr.textBox.Enabled = true;
             Fr.checkBoxFolder.Enabled = true;
-            Fr.Selects.Enabled = true;
-            Fr.Selects.BackgroundImage = Properties.Resources.select;
+            //Fr.Selects.Enabled = true;
+            //Fr.Selects.BackgroundImage = Properties.Resources.select;
             //Fr.Save.Enabled = true;
             //Fr.Save.BackgroundImage = Properties.Resources.save;
-            Fr.Updates.Enabled = true;
-            Fr.Updates.BackgroundImage = Properties.Resources.update;
+            //Fr.Updates.Enabled = true;
+            //Fr.Updates.BackgroundImage = Properties.Resources.update;
             Fr.dataGridView.Enabled = true;
         }
 
@@ -70,6 +74,11 @@ namespace Updater
         public static void SetMaxProgressBar(int max)
         {
             Fr.progressBar.Maximum = max;
+        }
+
+        public static void StepProgressBar()
+        {
+            Fr.progressBar.PerformStep();
         }
 
         public static void FullProgressBar()
@@ -131,6 +140,10 @@ namespace Updater
                     Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Green;
                     break;
 
+                case "Missed":
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.LightGray;
+                    break;
+
                 default:
                     Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Red;
                     break;
@@ -165,6 +178,11 @@ namespace Updater
 
         void Selects_Click(object sender, EventArgs e)
         {
+            if (!menuEnable)
+            {
+                MessageBox.Show("Update in progress.", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Application.StartupPath.ToString();
@@ -181,6 +199,11 @@ namespace Updater
 
         async void Updates_Click(object sender, EventArgs e)
         {
+            if (!menuEnable)
+            {
+                MessageBox.Show("Update in progress.", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return; 
+            }
             UiLock();
             progressBar.Value = 0;
             if (dataGridView.RowCount != 0)
@@ -197,17 +220,24 @@ namespace Updater
                         }
 
                         progressBar.Maximum = dataGridView.Rows.Count * files.Count();
-                        SemaphoreSlim semaphore = new SemaphoreSlim(1);
-                        List<Task> tasks = new List<Task>();
-                        foreach (DataGridViewRow row in dataGridView.Rows)
+
+                        var resource = new SemaphoreSlim(maxParallelism, maxParallelism);
+
+                        var tasks = Enumerable.Range(0, dataGridView.Rows.Count).Select(async row =>
                         {
-                            if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
+                            await resource.WaitAsync();
+                            try
                             {
-                                tasks.Add(() =>  UpdateFactor.Files(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), files, row.Index, semaphore));
+                                await UpdateFactor.Files((bool)dataGridView.Rows[row].Cells[0].Value, dataGridView.Rows[row].Cells["IP"].Value.ToString(), files, row);
                             }
-                            //progressBar.PerformStep();
-                            await Task.WhenAll(tasks);
-                        }
+                            finally
+                            {
+                                resource.Release();
+                            }
+                        });
+
+                        await Task.WhenAll(tasks);
+
                     }
                     else
                     {
@@ -223,14 +253,23 @@ namespace Updater
                         AddFileDataGridView(textBox.Text);
                         progressBar.Maximum = dataGridView.Rows.Count;
 
-                        foreach (DataGridViewRow row in dataGridView.Rows)
+                        var resource = new SemaphoreSlim(maxParallelism, maxParallelism);
+
+                        var tasks = Enumerable.Range(0, dataGridView.Rows.Count).Select(async row =>
                         {
-                            if ((bool)dataGridView.Rows[row.Index].Cells[0].Value == true)
+                            await resource.WaitAsync();
+                            try
                             {
-                                await UpdateFactor.SingleFile(dataGridView.Rows[row.Index].Cells["IP"].Value.ToString(), filePath, row.Index);
+                                await UpdateFactor.SingleFile((bool)dataGridView.Rows[row].Cells[0].Value, dataGridView.Rows[row].Cells["IP"].Value.ToString(), filePath, row);
                             }
-                            progressBar.PerformStep();
-                        }
+                            finally
+                            {
+                                resource.Release();
+                            }
+                        });
+                        
+                        await Task.WhenAll(tasks);
+
                     }
                     else
                     {
@@ -249,22 +288,25 @@ namespace Updater
 
             progressBar.Value = progressBar.Maximum;
 
-            string fileName = "Updates result " + DateTime.Now.ToString("dd.MM.yyyy HH.mm");
-            FileInfo fil = new FileInfo(Application.StartupPath + "\\" + fileName + ".csv");
-            using (StreamWriter sw = fil.AppendText())
+            if(MessageBox.Show("Save the list of updated complexes.", "Complexes to update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                var headers = dataGridView.Columns.Cast<DataGridViewColumn>();
-                sw.WriteLine(string.Join(";", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()));
-                sw.Close();
-            }
-            using (StreamWriter sw = fil.AppendText())
-            {
-                foreach (DataGridViewRow row in dataGridView.Rows)
+                string fileName = "Updates result " + DateTime.Now.ToString("dd.MM.yyyy HH.mm");
+                FileInfo fil = new FileInfo(Application.StartupPath + "\\" + fileName + ".csv");
+                using (StreamWriter sw = fil.AppendText())
                 {
-                    var cells = row.Cells.Cast<DataGridViewCell>();
-                    sw.WriteLine(string.Join(";", cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
+                    var headers = dataGridView.Columns.Cast<DataGridViewColumn>();
+                    sw.WriteLine(string.Join(";", headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()));
+                    sw.Close();
                 }
-                sw.Close();
+                using (StreamWriter sw = fil.AppendText())
+                {
+                    foreach (DataGridViewRow row in dataGridView.Rows)
+                    {
+                        var cells = row.Cells.Cast<DataGridViewCell>();
+                        sw.WriteLine(string.Join(";", cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
+                    }
+                    sw.Close();
+                }
             }
 
             UiUnLock();
@@ -300,6 +342,12 @@ namespace Updater
 
         void Search_Click(object sender, EventArgs e)
         {
+            if (!menuEnable)
+            {
+                MessageBox.Show("Update in progress.", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             UiLock();
 
             progressBar.Value = 0;
@@ -341,6 +389,11 @@ namespace Updater
 
         void Drop_DragDrop(object sender, DragEventArgs e)
         {
+            if (!menuEnable)
+            {
+                MessageBox.Show("Update in progress.", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             foreach (string obj in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
                 if (!Directory.Exists(obj))
