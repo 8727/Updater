@@ -6,7 +6,6 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace Updater
 {
@@ -92,17 +91,12 @@ namespace Updater
             {
                 int rowNumbe = Fr.dataGridView.Rows.Add();
 
-                bool status = true;
-                if (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor")
-                {
-                    status = false;
-                }
-                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = status;
+                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true;
                 Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
                 Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
             }
-            
-            Fr.dataGridView.Update();
+
+            Fr.dataGridView.Refresh();
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
