@@ -91,7 +91,7 @@
             this.StopIP.Name = "StopIP";
             this.StopIP.Size = new System.Drawing.Size(147, 26);
             this.StopIP.TabIndex = 3;
-            this.StopIP.Text = "10.5.127.10";
+            this.StopIP.Text = "192.168.88.19";
             this.StopIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // StartIP
@@ -102,7 +102,7 @@
             this.StartIP.Name = "StartIP";
             this.StartIP.Size = new System.Drawing.Size(147, 26);
             this.StartIP.TabIndex = 2;
-            this.StartIP.Text = "10.5.127.1";
+            this.StartIP.Text = "192.168.88.11";
             this.StartIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LebelStopIP
