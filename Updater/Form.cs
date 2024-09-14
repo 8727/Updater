@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Updater
 {
@@ -82,7 +83,8 @@ namespace Updater
             Fr.dataGridView.Columns[1].Width = 90;
             Fr.dataGridView.Columns[1].ReadOnly = true;
             Fr.dataGridView.Columns.Add("Name", "Name");
-            Fr.dataGridView.Columns[2].Width = 100;
+            Fr.dataGridView.Columns[2].MinimumWidth = 100;
+            Fr.dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Fr.dataGridView.Columns[2].ReadOnly = true;
 
             ICollection cameraKeys = Ui.Camera.Keys;
