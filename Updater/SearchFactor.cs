@@ -70,9 +70,7 @@ namespace Updater
             }
             Task.WaitAll(tasks);
             Ui.UiUnLock();
-            Ui.FullProgressBar();
-            Ui.AddDataGridView();
-            
+            Ui.FullProgressBar();            
         }
 
         public static void IpSearch(string Start_IP, string Stop_IP)

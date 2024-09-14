@@ -17,8 +17,6 @@ namespace Updater
 
         public static UInt32 loadingTimeOut = 120;
 
-        //public static int maxParallelism = 5;
-
         public bool menuEnable = true;
 
         public static Hashtable Camera = new Hashtable();
@@ -88,35 +86,35 @@ namespace Updater
             Fr.progressBar.Value = Fr.progressBar.Maximum;    
         }
 
-        public static void AddDataGridView()
+        public void AddDataGridView()
         {
             DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
             CheckboxColumn.Width = 25;
             CheckboxColumn.TrueValue = true;
             CheckboxColumn.FalseValue = false;
-            Fr.dataGridView.Columns.Add(CheckboxColumn);
+            dataGridView.Columns.Add(CheckboxColumn);
 
-            Fr.dataGridView.Columns.Add("IP", "IP");
-            Fr.dataGridView.Columns[1].Width = 90;
-            Fr.dataGridView.Columns[1].ReadOnly = true;
-            Fr.dataGridView.Columns.Add("Name", "Name");
-            Fr.dataGridView.Columns[2].Width = 100;
-            Fr.dataGridView.Columns[2].ReadOnly = true;
+            dataGridView.Columns.Add("IP", "IP");
+            dataGridView.Columns[1].Width = 90;
+            dataGridView.Columns[1].ReadOnly = true;
+            dataGridView.Columns.Add("Name", "Name");
+            dataGridView.Columns[2].Width = 100;
+            dataGridView.Columns[2].ReadOnly = true;
 
             ICollection cameraKeys = Ui.Camera.Keys;
             foreach (string ipCameraKey in cameraKeys)
             {
-                int rowNumbe = Fr.dataGridView.Rows.Add();
-                Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
+                int rowNumbe = dataGridView.Rows.Add();
+                dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
 
                 bool status = true;
                 if (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor")
                 {
                     status = false;
                 }
-                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = status;
-                Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
-                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
+                dataGridView.Rows[rowNumbe].Cells[0].Value = status;
+                dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
+                dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
             }
         }
 
@@ -206,6 +204,8 @@ namespace Updater
                 MessageBox.Show("Update in progress.", "File to update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return; 
             }
+
+            AddDataGridView();
             UiLock();
             progressBar.Value = 0;
             if (dataGridView.RowCount != 0)
