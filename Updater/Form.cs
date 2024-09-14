@@ -341,8 +341,6 @@ namespace Updater
                 return;
             }
 
-            UiLock();
-
             progressBar.Value = 0;
             dataGridView.Columns.Clear();
 
@@ -368,6 +366,7 @@ namespace Updater
                 return;
             }
             Camera.Clear();
+            UiLock();
 
             SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
         }
