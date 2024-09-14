@@ -130,7 +130,7 @@ namespace Updater
                     break;
 
                 case "Installed":
-                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Green;
+                    Fr.dataGridView.Rows[stroka].Cells[stolb].Style.BackColor = Color.Lime;
                     break;
 
                 case "Missed":

@@ -211,6 +211,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView.GridColor = System.Drawing.Color.DarkGray;
             this.dataGridView.Location = new System.Drawing.Point(8, 110);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersVisible = false;
