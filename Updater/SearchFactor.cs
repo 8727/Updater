@@ -71,7 +71,7 @@ namespace Updater
             Task.WaitAll(tasks);
             Ui.UiUnLock();
             Ui.FullProgressBar();
-            Ui.AddDataGridView();
+            //Ui.AddDataGridView();
             
         }
 
