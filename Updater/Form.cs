@@ -6,6 +6,13 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Web.Script.Serialization;
+using System.Xml;
 
 namespace Updater
 {
@@ -27,7 +34,7 @@ namespace Updater
             InitializeComponent();
         }
 
-        public static void UiLock()
+        void UiLock()
         {
             Fr.menuEnable = false;
             Fr.StartIP.Enabled = false;
@@ -38,7 +45,7 @@ namespace Updater
             Fr.dataGridView.Enabled = false;
         }
 
-        public static void UiUnLock()
+        void UiUnLock()
         {
             Fr.menuEnable = true;
             Fr.StartIP.Enabled = true;
@@ -49,13 +56,13 @@ namespace Updater
             Fr.dataGridView.Enabled = true;
         }
 
-        public static void FactorsAdd(string ip, string name)
+        void FactorsAdd(string ip, string name)
         {
             Camera.Add(ip, name);
             Fr.progressBar.PerformStep();
         }
 
-        public static void SetMaxProgressBar(int max)
+        void SetMaxProgressBar(int max)
         {
             Fr.progressBar.Maximum = max;
         }
@@ -65,12 +72,12 @@ namespace Updater
             Fr.progressBar.PerformStep();
         }
 
-        public static void FullProgressBar()
+        void FullProgressBar()
         {
             Fr.progressBar.Value = Fr.progressBar.Maximum;    
         }
 
-        public static void AddDataGridView()
+        void AddDataGridView()
         {
             DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
             CheckboxColumn.Width = 25;
@@ -94,9 +101,10 @@ namespace Updater
                 Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true;
                 Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
                 Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
+                Thread.Sleep(100);
             }
 
-            Fr.dataGridView.Refresh();
+            //Fr.dataGridView.Refresh();
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
@@ -334,8 +342,8 @@ namespace Updater
             progressBar.Value = 0;
             dataGridView.Columns.Clear();
 
-            bool startIp = SearchFactor.Check(StartIP.Text);
-            bool stopIp = SearchFactor.Check(StopIP.Text);
+            bool startIp = Check(StartIP.Text);
+            bool stopIp = Check(StopIP.Text);
 
             string send = "";
             if (!startIp)
@@ -357,7 +365,7 @@ namespace Updater
             }
             Camera.Clear();
 
-            SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
+            IpSearch(StartIP.Text, StopIP.Text);
         }
 
         void Drop_DragEnter(object sender, DragEventArgs e)
@@ -386,10 +394,123 @@ namespace Updater
                         progressBar.Value = 0;
                         dataGridView.Columns.Clear();
                         Camera.Clear();
-                        SearchFactor.Drop(obj);
+                        Drop(obj);
                     }
                 }
             }
+        }
+
+
+        List<string> computersList = new List<string>();
+
+        public static bool Check(string ip)
+        {
+            Regex regex = new Regex("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            return regex.IsMatch(ip);
+        }
+
+        static uint IpToUInt32(string ipAddress)
+        {
+            return BitConverter.ToUInt32(IPAddress.Parse(ipAddress).GetAddressBytes().Reverse().ToArray(), 0);
+        }
+
+        string UInt32ToIp(uint ipAddress)
+        {
+            return new IPAddress(BitConverter.GetBytes(ipAddress).Reverse().ToArray()).ToString();
+        }
+
+        async Task NameComplex(string ip)
+        {
+            string host = "IP is unavailable";
+            PingReply pr = await new Ping().SendPingAsync(ip, 5000);
+            if (pr.Status == IPStatus.Success)
+            {
+                try
+                {
+                    HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}/unitinfo/api/unitinfo");
+                    HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                    using (StreamReader stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
+                    {
+                        string factorJson = stream.ReadToEnd();
+                        var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
+                        string factoryNumber = datajson["unit"]["factoryNumber"];
+                        string serialNumber = datajson["certificate"]["serialNumber"];
+                        host = serialNumber + " - " + factoryNumber;
+                    }
+                }
+                catch
+                {
+                    host = "Not a Factor";
+                }
+            }
+            FactorsAdd(ip, host);
+        }
+
+        void SearchFactors()
+        {
+            Task[] tasks = new Task[computersList.Count];
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                tasks[i] = NameComplex(computersList.ElementAt<string>(i));
+            }
+            Task.WaitAll(tasks);
+            UiUnLock();
+            FullProgressBar();
+            AddDataGridView();
+
+        }
+
+        public void IpSearch(string Start_IP, string Stop_IP)
+        {
+            computersList.Clear();
+            uint StartIPv4_UInt32 = IpToUInt32(Start_IP);
+            uint EndIPv4_UInt32 = IpToUInt32(Stop_IP);
+
+            if (StartIPv4_UInt32 > EndIPv4_UInt32)
+            {
+                uint xxx = StartIPv4_UInt32;
+                StartIPv4_UInt32 = EndIPv4_UInt32;
+                EndIPv4_UInt32 = xxx;
+            }
+
+            for (uint i = StartIPv4_UInt32; i <= EndIPv4_UInt32; i++)
+            {
+                computersList.Add(UInt32ToIp(i));
+            }
+
+            SetMaxProgressBar(computersList.Count);
+
+            new Thread(() => {
+                SearchFactors();
+            }).Start();
+
+        }
+
+        void Drop(string file)
+        {
+            computersList.Clear();
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(file);
+            XmlElement xRoot = xDoc.DocumentElement;
+            if (xRoot != null)
+            {
+                foreach (XmlElement xnode in xRoot)
+                {
+                    if (xnode.Name == "ip")
+                    {
+                        if (Check(xnode.InnerText))
+                        {
+                            computersList.Add(xnode.InnerText);
+                        }
+                    }
+                }
+            }
+
+            SetMaxProgressBar(computersList.Count);
+
+            new Thread(() => {
+                SearchFactors();
+            }).Start();
         }
     }
 }
