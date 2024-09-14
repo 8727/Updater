@@ -96,7 +96,7 @@ namespace Updater
                 Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
             }
 
-            Fr.dataGridView.Refresh();
+            //Fr.dataGridView.Refresh();
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
