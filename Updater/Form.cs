@@ -7,6 +7,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Data;
 
 namespace Updater
 {
@@ -73,36 +74,28 @@ namespace Updater
 
         public static void AddDataGridView()
         {
-            DataGridViewCheckBoxColumn CheckboxColumn = new DataGridViewCheckBoxColumn();
-            CheckboxColumn.Width = 25;
-            CheckboxColumn.TrueValue = true;
-            CheckboxColumn.FalseValue = false;
-            Fr.dataGridView.Columns.Add(CheckboxColumn);
-
-            Fr.dataGridView.Columns.Add("IP", "IP");
-            Fr.dataGridView.Columns[1].Width = 90;
-            Fr.dataGridView.Columns[1].ReadOnly = true;
-            Fr.dataGridView.Columns.Add("Name", "Name");
-            Fr.dataGridView.Columns[2].MinimumWidth = 100;
-            Fr.dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Fr.dataGridView.Columns[2].ReadOnly = true;
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("", typeof(bool));
+            dataTable.Columns.Add("IP", typeof(string));
+            dataTable.Columns.Add("Name", typeof(string));
 
             ICollection cameraKeys = Ui.Camera.Keys;
             foreach (string ipCameraKey in cameraKeys)
             {
-                int rowNumbe = Fr.dataGridView.Rows.Add();
-
-                bool status = true;
-                if (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor")
-                {
-                    status = false;
-                }
-                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = status;
-                Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
-                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
+                bool status = (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true;
+                dataTable.Rows.Add(status, ipCameraKey, Camera[ipCameraKey]);
             }
-            
-            Fr.dataGridView.Update();
+
+            Fr.dataGridView.DataSource = dataTable;
+
+            Fr.dataGridView.Columns[0].Width = 25;
+            Fr.dataGridView.Columns[0].HeaderText = "";
+
+            Fr.dataGridView.Columns[1].Width = 90;
+            Fr.dataGridView.Columns[1].ReadOnly = true;
+            Fr.dataGridView.Columns[2].MinimumWidth = 100;
+            Fr.dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Fr.dataGridView.Columns[2].ReadOnly = true;
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
