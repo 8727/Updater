@@ -89,14 +89,26 @@ namespace Updater
             ICollection cameraKeys = Ui.Camera.Keys;
             foreach (string ipCameraKey in cameraKeys)
             {
-                int rowNumbe = Fr.dataGridView.Rows.Add();
+                if (Fr.dataGridView.InvokeRequired)
+                {
+                    Fr.dataGridView.Invoke((Action)(() => Fr.dataGridView.Rows.Add(new object[] 
+                    {
+                        (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true,
+                        ipCameraKey,
+                        Camera[ipCameraKey].ToString()
 
-                Fr.dataGridView.Rows[rowNumbe].Cells[0].Value = (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true;
-                Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
-                Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
+                })));
+                }
+                else
+                {
+                    Fr.dataGridView.Rows.Add(new object[] 
+                    {
+                        (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true,
+                        ipCameraKey,
+                        Camera[ipCameraKey].ToString()
+                    });
+                }
             }
-
-            //Fr.dataGridView.Refresh();
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
