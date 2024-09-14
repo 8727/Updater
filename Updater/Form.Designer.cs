@@ -192,7 +192,7 @@
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersVisible = false;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView.Size = new System.Drawing.Size(1567, 551);
             this.dataGridView.TabIndex = 5;
             this.dataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.Drop_DragDrop);
