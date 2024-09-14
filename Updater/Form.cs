@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Drawing;
+using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Updater
@@ -16,8 +16,6 @@ namespace Updater
         string filePath = string.Empty;
 
         public static UInt32 loadingTimeOut = 120;
-
-        //public static int maxParallelism = 5;
 
         public bool menuEnable = true;
 
@@ -34,16 +32,8 @@ namespace Updater
             Fr.menuEnable = false;
             Fr.StartIP.Enabled = false;
             Fr.StopIP.Enabled = false;
-            //Fr.Search.Enabled = false;
-            //Fr.Search.BackgroundImage = Properties.Resources.searchL;
             Fr.textBox.Enabled = false;
             Fr.checkBoxFolder.Enabled = false;
-            //Fr.Selects.Enabled = false;
-            //Fr.Selects.BackgroundImage = Properties.Resources.selectL;
-            //Fr.Save.Enabled = false;
-            //Fr.Save.BackgroundImage = Properties.Resources.saveL;
-            //Fr.Updates.Enabled = false;
-            //Fr.Updates.BackgroundImage = Properties.Resources.updateL;
             Fr.maxParallelism.Enabled = false;
             Fr.dataGridView.Enabled = false;
         }
@@ -53,16 +43,8 @@ namespace Updater
             Fr.menuEnable = true;
             Fr.StartIP.Enabled = true;
             Fr.StopIP.Enabled = true;
-            //Fr.Search.Enabled = true;
-            //Fr.Search.BackgroundImage = Properties.Resources.search;
             Fr.textBox.Enabled = true;
             Fr.checkBoxFolder.Enabled = true;
-            //Fr.Selects.Enabled = true;
-            //Fr.Selects.BackgroundImage = Properties.Resources.select;
-            //Fr.Save.Enabled = true;
-            //Fr.Save.BackgroundImage = Properties.Resources.save;
-            //Fr.Updates.Enabled = true;
-            //Fr.Updates.BackgroundImage = Properties.Resources.update;
             Fr.maxParallelism.Enabled = true;
             Fr.dataGridView.Enabled = true;
         }
@@ -107,7 +89,6 @@ namespace Updater
             foreach (string ipCameraKey in cameraKeys)
             {
                 int rowNumbe = Fr.dataGridView.Rows.Add();
-                Fr.dataGridView.FirstDisplayedScrollingRowIndex = rowNumbe;
 
                 bool status = true;
                 if (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor")
@@ -118,6 +99,8 @@ namespace Updater
                 Fr.dataGridView.Rows[rowNumbe].Cells[1].Value = ipCameraKey;
                 Fr.dataGridView.Rows[rowNumbe].Cells[2].Value = Camera[ipCameraKey];
             }
+            
+            Fr.dataGridView.Update();
         }
 
         public static void StatusDataGridView(int stroka, string stolb, string status)
