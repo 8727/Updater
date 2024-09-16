@@ -6,7 +6,6 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Updater
 {
