@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,6 +49,7 @@
             this.Save = new System.Windows.Forms.Button();
             this.Updates = new System.Windows.Forms.Button();
             this.maxParallelism = new System.Windows.Forms.TrackBar();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RangeIP.SuspendLayout();
             this.UpdateFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -85,6 +87,7 @@
             this.Search.TabIndex = 7;
             this.Search.UseVisualStyleBackColor = false;
             this.Search.Click += new System.EventHandler(this.Search_Click);
+            this.Search.MouseHover += new System.EventHandler(this.Search_MouseHover);
             // 
             // StopIP
             // 
@@ -96,6 +99,7 @@
             this.StopIP.TabIndex = 3;
             this.StopIP.Text = "192.168.88.19";
             this.StopIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.StopIP.MouseHover += new System.EventHandler(this.StopIP_MouseHover);
             // 
             // StartIP
             // 
@@ -107,6 +111,7 @@
             this.StartIP.TabIndex = 2;
             this.StartIP.Text = "192.168.88.11";
             this.StartIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.StartIP.MouseHover += new System.EventHandler(this.StartIP_MouseHover);
             // 
             // LebelStopIP
             // 
@@ -141,6 +146,7 @@
             this.checkBoxFolder.Text = "Folder Update";
             this.checkBoxFolder.UseVisualStyleBackColor = true;
             this.checkBoxFolder.CheckedChanged += new System.EventHandler(this.checkBoxFolder_CheckedChanged);
+            this.checkBoxFolder.MouseHover += new System.EventHandler(this.checkBoxFolder_MouseHover);
             // 
             // UpdateFile
             // 
@@ -169,6 +175,7 @@
             this.Selects.TabIndex = 6;
             this.Selects.UseVisualStyleBackColor = false;
             this.Selects.Click += new System.EventHandler(this.Selects_Click);
+            this.Selects.MouseHover += new System.EventHandler(this.Selects_MouseHover);
             // 
             // textBox
             // 
@@ -230,6 +237,7 @@
             this.progressBar.Size = new System.Drawing.Size(488, 83);
             this.progressBar.Step = 1;
             this.progressBar.TabIndex = 6;
+            this.progressBar.MouseHover += new System.EventHandler(this.progressBar_MouseHover);
             // 
             // Updater
             // 
@@ -256,6 +264,7 @@
             this.Save.TabIndex = 7;
             this.Save.UseVisualStyleBackColor = false;
             this.Save.Click += new System.EventHandler(this.Save_Click);
+            this.Save.MouseHover += new System.EventHandler(this.Save_MouseHover);
             // 
             // Updates
             // 
@@ -272,6 +281,7 @@
             this.Updates.TabIndex = 6;
             this.Updates.UseVisualStyleBackColor = false;
             this.Updates.Click += new System.EventHandler(this.Updates_Click);
+            this.Updates.MouseHover += new System.EventHandler(this.Updates_MouseHover);
             // 
             // maxParallelism
             // 
@@ -284,6 +294,12 @@
             this.maxParallelism.TabIndex = 7;
             this.maxParallelism.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.maxParallelism.Value = 5;
+            this.maxParallelism.MouseHover += new System.EventHandler(this.maxParallelism_MouseHover);
+            // 
+            // toolTip
+            // 
+            this.toolTip.BackColor = System.Drawing.SystemColors.GrayText;
+            this.toolTip.IsBalloon = true;
             // 
             // Ui
             // 
@@ -331,6 +347,7 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button Search;
         private System.Windows.Forms.TrackBar maxParallelism;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

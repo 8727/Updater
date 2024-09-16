@@ -6,6 +6,7 @@ using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Updater
 {
@@ -401,6 +402,51 @@ namespace Updater
                     }
                 }
             }
+        }
+
+        private void StartIP_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(StartIP, "Start address for search.");
+        }
+
+        private void StopIP_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(StopIP, "Final address to search for.");
+        }
+
+        private void Search_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(Search, "Starting a search.");
+        }
+
+        private void checkBoxFolder_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(checkBoxFolder, "Update from the program folder or the selected file.");
+        }
+
+        private void Selects_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(Selects, "Select a file to update.");
+        }
+
+        private void Save_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(Save, "Saving the update table.");
+        }
+
+        private void Updates_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(Updates, "Starting the update.");
+        }
+
+        private void maxParallelism_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(maxParallelism, "The number of parallel updates is from 1 to 10.");
+        }
+
+        private void progressBar_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(progressBar, "Progress bar for searching for complexes or performing updates.");
         }
     }
 }
