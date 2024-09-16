@@ -275,7 +275,7 @@ namespace Updater
             }
             else
             {
-                MessageBox.Show("There are no complexes to update.", "Complexes to update", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There are no complexes to update.", "Complexes to update", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 UiUnLock();
                 return;
             }
