@@ -21,6 +21,12 @@ namespace Updater
 
         public static Hashtable Camera = new Hashtable();
 
+        public class NameVersion
+        {
+            public string name;
+            public string version;
+        }
+
         public Ui()
         {
             Fr = this;
@@ -49,9 +55,9 @@ namespace Updater
             Fr.dataGridView.Enabled = true;
         }
 
-        public static void FactorsAdd(string ip, string name)
+        public static void FactorsAdd(string ip, NameVersion obj)
         {
-            Camera.Add(ip, name);
+            Camera.Add(ip, obj);
             Fr.progressBar.PerformStep();
         }
 
@@ -86,16 +92,22 @@ namespace Updater
             Fr.dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             Fr.dataGridView.Columns[2].ReadOnly = true;
 
+            Fr.dataGridView.Columns.Add("Version", "Version");
+            Fr.dataGridView.Columns[3].MinimumWidth = 80;
+            Fr.dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Fr.dataGridView.Columns[3].ReadOnly = true;
+
             ICollection cameraKeys = Ui.Camera.Keys;
             foreach (string ipCameraKey in cameraKeys)
             {
+                NameVersion nameVersion = (NameVersion)Camera[ipCameraKey];
+
                 if (Fr.dataGridView.InvokeRequired)
                 {
                     Fr.dataGridView.Invoke((Action)(() => Fr.dataGridView.Rows.Add(new object[] 
                     {
-                        (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true,
-                        ipCameraKey,
-                        Camera[ipCameraKey].ToString()
+                        (nameVersion.name.ToString() == "IP is unavailable" | nameVersion.name.ToString() == "Not a Factor") ? false : true,
+                        ipCameraKey, nameVersion.name, nameVersion.version
 
                 })));
                 }
@@ -103,9 +115,8 @@ namespace Updater
                 {
                     Fr.dataGridView.Rows.Add(new object[] 
                     {
-                        (Camera[ipCameraKey].ToString() == "IP is unavailable" | Camera[ipCameraKey].ToString() == "Not a Factor") ? false : true,
-                        ipCameraKey,
-                        Camera[ipCameraKey].ToString()
+                        (nameVersion.name.ToString() == "IP is unavailable" | nameVersion.name.ToString() == "Not a Factor") ? false : true,
+                        ipCameraKey, nameVersion.name, nameVersion.version
                     });
                 }
             }

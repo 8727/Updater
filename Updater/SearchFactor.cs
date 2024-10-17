@@ -36,7 +36,9 @@ namespace Updater
 
         static async Task NameComplex(string ip)
         {
+            Ui.NameVersion nameVersion = new Ui.NameVersion();
             string host = "IP is unavailable";
+            string version = "0.0.0";
             PingReply pr = await new Ping().SendPingAsync(ip, 5000);
             if (pr.Status == IPStatus.Success)
             {
@@ -52,13 +54,24 @@ namespace Updater
                         string serialNumber = datajson["certificate"]["serialNumber"];
                         host = serialNumber + " - " + factoryNumber;
                     }
+                    HttpWebRequest reqv = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}/updater/installed-factor-version");
+                    HttpWebResponse respv = (HttpWebResponse)reqv.GetResponse();
+                    using (StreamReader stream = new StreamReader(respv.GetResponseStream(), Encoding.UTF8))
+                    {
+                        string factorJson = stream.ReadToEnd();
+                        var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
+                        version = datajson["version"];
+                    }
                 }
                 catch
                 {
                     host = "Not a Factor";
                 }
             }
-            Ui.FactorsAdd(ip, host);
+            nameVersion.name = host;
+            nameVersion.version = version;
+
+            Ui.FactorsAdd(ip, nameVersion);
         }
 
         static void SearchFactors()
