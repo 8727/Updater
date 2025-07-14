@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Updater
+namespace Updater2
 {
     internal static class Program
     {

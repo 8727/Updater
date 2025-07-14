@@ -12,7 +12,7 @@ using System.Web.Script.Serialization;
 using System.Text.RegularExpressions;
 
 
-namespace Updater
+namespace Updater2
 {
     internal class SearchFactor
     {
@@ -51,8 +51,9 @@ namespace Updater
                         string factorJson = stream.ReadToEnd();
                         var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
                         string factoryNumber = datajson["unit"]["factoryNumber"];
-                        string serialNumber = datajson["certificate"]["serialNumber"];
-                        host = serialNumber + " - " + factoryNumber;
+                        //string serialNumber = datajson["certificate"]["serialNumber"];
+                        //host = serialNumber + " - " + factoryNumber;
+                        host = factoryNumber;
                     }
                     HttpWebRequest reqv = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}/updater/installed-factor-version");
                     HttpWebResponse respv = (HttpWebResponse)reqv.GetResponse();

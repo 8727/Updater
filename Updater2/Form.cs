@@ -7,7 +7,7 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 
-namespace Updater
+namespace Updater2
 {
     public partial class Ui : Form
     {
@@ -168,7 +168,10 @@ namespace Updater
             if (checkBoxFolder.Checked)
             {
                 Selects.Enabled = false;
-                string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
+                string[] patterns = { "*.tar.gz", "*.deb", "*.sh" };
+                string[] files = patterns.SelectMany(pattern => Directory.GetFiles(Application.StartupPath, pattern, SearchOption.AllDirectories)).Distinct().ToArray();
+
+                //string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
                 int filesUpdate = files.Count();
                 textBox.Text = $"{filesUpdate} files in the update folder.";
             }
@@ -190,7 +193,7 @@ namespace Updater
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = Application.StartupPath.ToString();
-                openFileDialog.Filter = "Firmware Files (*.tar.gz) | *.tar.gz";
+                openFileDialog.Filter = "Files (*.tar.gz; *.deb; *.sh) | *.tar.gz; *.deb; *.sh";
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -214,8 +217,10 @@ namespace Updater
             {
                 if (checkBoxFolder.Checked)
                 {
-                    string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
-                    
+                    //string[] files = Directory.GetFiles(Application.StartupPath, "*.tar.gz", SearchOption.AllDirectories);
+                    string[] patterns = { "*.tar.gz", "*.deb", "*.sh" };
+                    string[] files = patterns.SelectMany(pattern => Directory.GetFiles(Application.StartupPath, pattern, SearchOption.AllDirectories)).Distinct().OrderBy(file => Path.GetFileName(file)).ToArray();
+
                     if (files.Count() != 0)
                     {
                         foreach (string file in files)

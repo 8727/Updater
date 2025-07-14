@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Web.Script.Serialization;
 
-namespace Updater
+namespace Updater2
 {
     internal class UpdateFactor
     {

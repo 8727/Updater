@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("Updater")]
+[assembly: AssemblyTitle("Updater2")]
 [assembly: AssemblyDescription("Updating photo and video recording systems.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alex Li")]
-[assembly: AssemblyProduct("Updater")]
+[assembly: AssemblyProduct("Updater2")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Номер сборки
 //      Редакция
 //
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]

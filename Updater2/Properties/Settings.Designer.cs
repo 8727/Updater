@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Updater.Properties
+namespace Updater2.Properties
 {
 
 
