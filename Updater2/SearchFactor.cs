@@ -34,7 +34,7 @@ namespace Updater2
             return new IPAddress(BitConverter.GetBytes(ipAddress).Reverse().ToArray()).ToString();
         }
 
-        static async Task NameComplex(string ip)
+        static async Task NameComplex(string ip, string webPort)
         {
             Ui.NameVersion nameVersion = new Ui.NameVersion();
             string host = "IP is unavailable";
@@ -44,18 +44,24 @@ namespace Updater2
             {
                 try
                 {
-                    HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}/unitinfo/api/unitinfo");
+                    HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}:{webPort}/unitinfo/api/unitinfo");
                     HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                     using (StreamReader stream = new StreamReader(resp.GetResponseStream(), Encoding.UTF8))
                     {
                         string factorJson = stream.ReadToEnd();
                         var datajson = new JavaScriptSerializer().Deserialize<dynamic>(factorJson);
                         string factoryNumber = datajson["unit"]["factoryNumber"];
-                        //string serialNumber = datajson["certificate"]["serialNumber"];
-                        //host = serialNumber + " - " + factoryNumber;
-                        host = factoryNumber;
+                        string serialNumber = "";
+
+                        if (datajson["certificate"] != null &&
+                            datajson["certificate"].ContainsKey("serialNumber") &&
+                            datajson["certificate"]["serialNumber"] != null)
+                        {
+                            serialNumber = datajson["certificate"]["serialNumber"] + " - ";
+                        }
+                        host = serialNumber + factoryNumber;
                     }
-                    HttpWebRequest reqv = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}/updater/installed-factor-version");
+                    HttpWebRequest reqv = (HttpWebRequest)HttpWebRequest.Create($"http://{ip}:{webPort}/updater/installed-factor-version");
                     HttpWebResponse respv = (HttpWebResponse)reqv.GetResponse();
                     using (StreamReader stream = new StreamReader(respv.GetResponseStream(), Encoding.UTF8))
                     {
@@ -75,12 +81,12 @@ namespace Updater2
             Ui.FactorsAdd(ip, nameVersion);
         }
 
-        static void SearchFactors()
+        static void SearchFactors(string webPort)
         {
             Task[] tasks = new Task[computersList.Count];
             for (int i = 0; i < tasks.Length; i++)
             {
-                tasks[i] = NameComplex(computersList.ElementAt<string>(i));
+                tasks[i] = NameComplex(computersList.ElementAt<string>(i), webPort);
             }
             Task.WaitAll(tasks);
             Ui.UiUnLock();
@@ -89,7 +95,7 @@ namespace Updater2
             
         }
 
-        public static void IpSearch(string Start_IP, string Stop_IP)
+        public static void IpSearch(string Start_IP, string Stop_IP, string webPort)
         {
             computersList.Clear();
             uint StartIPv4_UInt32 = IpToUInt32(Start_IP);
@@ -110,12 +116,12 @@ namespace Updater2
             Ui.SetMaxProgressBar(computersList.Count);
 
             new Thread(() => {
-                SearchFactors();
+                SearchFactors(webPort);
             }).Start();
             
         }
 
-        public static void Drop(string file)
+        public static void Drop(string file, string webPort)
         {
             computersList.Clear();
             XmlDocument xDoc = new XmlDocument();
@@ -138,7 +144,7 @@ namespace Updater2
             Ui.SetMaxProgressBar(computersList.Count);
 
             new Thread(() => {
-                SearchFactors();
+                SearchFactors(webPort);
             }).Start();
         }
     }

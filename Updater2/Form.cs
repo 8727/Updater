@@ -38,10 +38,16 @@ namespace Updater2
             Fr.menuEnable = false;
             Fr.StartIP.Enabled = false;
             Fr.StopIP.Enabled = false;
-            Fr.textBox.Enabled = false;
+            Fr.Search.Enabled = false; 
+            Fr.sshLogin.Enabled = false;
+            Fr.sshPass.Enabled = false;
+            Fr.webPort.Enabled = false;
+            Fr.sshPort.Enabled = false;
+            Fr.checkSaveSettings.Enabled = false;
             Fr.checkBoxFolder.Enabled = false;
+            Fr.Selects.Enabled = false;
             Fr.maxParallelism.Enabled = false;
-            Fr.dataGridView.Enabled = false;
+            Fr.dataGridView.Enabled = false;   
         }
 
         public static void UiUnLock()
@@ -49,8 +55,14 @@ namespace Updater2
             Fr.menuEnable = true;
             Fr.StartIP.Enabled = true;
             Fr.StopIP.Enabled = true;
-            Fr.textBox.Enabled = true;
+            Fr.Search.Enabled = true;
+            Fr.sshLogin.Enabled = true;
+            Fr.sshPass.Enabled = true;
+            Fr.webPort.Enabled = true;
+            Fr.sshPort.Enabled = true;
+            Fr.checkSaveSettings.Enabled = true;
             Fr.checkBoxFolder.Enabled = true;
+            Fr.Selects.Enabled = true;
             Fr.maxParallelism.Enabled = true;
             Fr.dataGridView.Enabled = true;
         }
@@ -156,11 +168,17 @@ namespace Updater2
 
         void AddFileDataGridView(string name)
         {
-            int index = dataGridView.Columns.Count;
-            dataGridView.Columns.Add(name, name);
-            dataGridView.Columns[index].MinimumWidth = 100;
-            dataGridView.Columns[index].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridView.Columns[index].ReadOnly = true;
+            if (dataGridView.Columns.Contains(name)) return;
+
+            var newCol = new DataGridViewTextBoxColumn
+            {
+                Name = name,
+                HeaderText = name,
+                MinimumWidth = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                ReadOnly = true
+            };
+            dataGridView.Columns.Add(newCol);
         }
 
         void checkBoxFolder_CheckedChanged(object sender, EventArgs e)
@@ -180,7 +198,6 @@ namespace Updater2
                 Selects.Enabled = true;
                 textBox.Text = "Select the file to update.";
             }
-
         }
 
         void Selects_Click(object sender, EventArgs e)
@@ -384,7 +401,7 @@ namespace Updater2
             Camera.Clear();
             UiLock();
 
-            SearchFactor.IpSearch(StartIP.Text, StopIP.Text);
+            SearchFactor.IpSearch(StartIP.Text, StopIP.Text, webPort.Text);
         }
 
         void Drop_DragEnter(object sender, DragEventArgs e)
@@ -413,7 +430,7 @@ namespace Updater2
                         progressBar.Value = 0;
                         dataGridView.Columns.Clear();
                         Camera.Clear();
-                        SearchFactor.Drop(obj);
+                        SearchFactor.Drop(obj, webPort.Text);
                     }
                 }
             }
@@ -462,6 +479,21 @@ namespace Updater2
         private void progressBar_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(progressBar, "Progress bar for searching for complexes or performing updates.");
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkSaveSettings.Checked)
+            {
+                if (MessageBox.Show("Are you sure you want to disable saving settings during update.", "Saving settings when updating.", MessageBoxButtons.YesNo, MessageBoxIcon.Question,MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    checkSaveSettings.Checked = false;
+                }
+                else
+                {
+                    checkSaveSettings.Checked = true;
+                }
+            }
         }
     }
 }

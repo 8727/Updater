@@ -41,6 +41,7 @@
             this.LebelStartIP = new System.Windows.Forms.Label();
             this.checkBoxFolder = new System.Windows.Forms.CheckBox();
             this.UpdateFile = new System.Windows.Forms.GroupBox();
+            this.checkSaveSettings = new System.Windows.Forms.CheckBox();
             this.Selects = new System.Windows.Forms.Button();
             this.textBox = new System.Windows.Forms.TextBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
@@ -51,24 +52,26 @@
             this.maxParallelism = new System.Windows.Forms.TrackBar();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.auti = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.labelPort = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.sshPort = new System.Windows.Forms.TextBox();
+            this.labelSshPort = new System.Windows.Forms.Label();
+            this.webPort = new System.Windows.Forms.TextBox();
+            this.sshPass = new System.Windows.Forms.TextBox();
+            this.labelWebPort = new System.Windows.Forms.Label();
+            this.sshLogin = new System.Windows.Forms.TextBox();
             this.LebelPass = new System.Windows.Forms.Label();
             this.LebelLogin = new System.Windows.Forms.Label();
-            this.labeltext = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labeltext1 = new System.Windows.Forms.Label();
-            this.labeltext5 = new System.Windows.Forms.Label();
-            this.labeltext10 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.labelNumber = new System.Windows.Forms.Label();
+            this.labelUpdate = new System.Windows.Forms.Label();
+            this.labelNumber_1 = new System.Windows.Forms.Label();
+            this.labelNumber_2 = new System.Windows.Forms.Label();
+            this.labelNumber_3 = new System.Windows.Forms.Label();
+            this.labelNumber_4 = new System.Windows.Forms.Label();
+            this.labelNumber_5 = new System.Windows.Forms.Label();
+            this.labelNumber_6 = new System.Windows.Forms.Label();
+            this.labelNumber_7 = new System.Windows.Forms.Label();
+            this.labelNumber_8 = new System.Windows.Forms.Label();
+            this.labelNumber_9 = new System.Windows.Forms.Label();
+            this.labelNumber_10 = new System.Windows.Forms.Label();
             this.RangeIP.SuspendLayout();
             this.UpdateFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -88,7 +91,7 @@
             this.RangeIP.Margin = new System.Windows.Forms.Padding(5);
             this.RangeIP.Name = "RangeIP";
             this.RangeIP.Padding = new System.Windows.Forms.Padding(5);
-            this.RangeIP.Size = new System.Drawing.Size(336, 100);
+            this.RangeIP.Size = new System.Drawing.Size(310, 100);
             this.RangeIP.TabIndex = 1;
             this.RangeIP.TabStop = false;
             // 
@@ -100,7 +103,7 @@
             this.Search.FlatAppearance.BorderSize = 0;
             this.Search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Search.Location = new System.Drawing.Point(250, 13);
+            this.Search.Location = new System.Drawing.Point(225, 13);
             this.Search.Margin = new System.Windows.Forms.Padding(5);
             this.Search.Name = "Search";
             this.Search.Size = new System.Drawing.Size(80, 80);
@@ -112,7 +115,7 @@
             // StopIP
             // 
             this.StopIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.StopIP.Location = new System.Drawing.Point(92, 57);
+            this.StopIP.Location = new System.Drawing.Point(75, 57);
             this.StopIP.Margin = new System.Windows.Forms.Padding(5);
             this.StopIP.Name = "StopIP";
             this.StopIP.Size = new System.Drawing.Size(147, 26);
@@ -124,7 +127,7 @@
             // StartIP
             // 
             this.StartIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.StartIP.Location = new System.Drawing.Point(92, 21);
+            this.StartIP.Location = new System.Drawing.Point(75, 21);
             this.StartIP.Margin = new System.Windows.Forms.Padding(5);
             this.StartIP.Name = "StartIP";
             this.StartIP.Size = new System.Drawing.Size(147, 26);
@@ -137,7 +140,7 @@
             // 
             this.LebelStopIP.AutoSize = true;
             this.LebelStopIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LebelStopIP.Location = new System.Drawing.Point(8, 60);
+            this.LebelStopIP.Location = new System.Drawing.Point(1, 60);
             this.LebelStopIP.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LebelStopIP.Name = "LebelStopIP";
             this.LebelStopIP.Size = new System.Drawing.Size(74, 20);
@@ -148,7 +151,7 @@
             // 
             this.LebelStartIP.AutoSize = true;
             this.LebelStartIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LebelStartIP.Location = new System.Drawing.Point(6, 24);
+            this.LebelStartIP.Location = new System.Drawing.Point(1, 24);
             this.LebelStartIP.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LebelStartIP.Name = "LebelStartIP";
             this.LebelStartIP.Size = new System.Drawing.Size(76, 20);
@@ -159,10 +162,10 @@
             // 
             this.checkBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxFolder.AutoSize = true;
-            this.checkBoxFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBoxFolder.Location = new System.Drawing.Point(162, 56);
+            this.checkBoxFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBoxFolder.Location = new System.Drawing.Point(196, 57);
             this.checkBoxFolder.Name = "checkBoxFolder";
-            this.checkBoxFolder.Size = new System.Drawing.Size(200, 33);
+            this.checkBoxFolder.Size = new System.Drawing.Size(180, 29);
             this.checkBoxFolder.TabIndex = 8;
             this.checkBoxFolder.Text = "Folder Update";
             this.checkBoxFolder.UseVisualStyleBackColor = true;
@@ -173,14 +176,29 @@
             // 
             this.UpdateFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpdateFile.Controls.Add(this.checkSaveSettings);
             this.UpdateFile.Controls.Add(this.checkBoxFolder);
             this.UpdateFile.Controls.Add(this.Selects);
             this.UpdateFile.Controls.Add(this.textBox);
-            this.UpdateFile.Location = new System.Drawing.Point(679, 2);
+            this.UpdateFile.Location = new System.Drawing.Point(627, 2);
             this.UpdateFile.Name = "UpdateFile";
-            this.UpdateFile.Size = new System.Drawing.Size(463, 100);
+            this.UpdateFile.Size = new System.Drawing.Size(460, 100);
             this.UpdateFile.TabIndex = 4;
             this.UpdateFile.TabStop = false;
+            // 
+            // checkSaveSettings
+            // 
+            this.checkSaveSettings.AutoSize = true;
+            this.checkSaveSettings.Checked = true;
+            this.checkSaveSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkSaveSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkSaveSettings.Location = new System.Drawing.Point(13, 57);
+            this.checkSaveSettings.Name = "checkSaveSettings";
+            this.checkSaveSettings.Size = new System.Drawing.Size(174, 29);
+            this.checkSaveSettings.TabIndex = 21;
+            this.checkSaveSettings.Text = "Save settings";
+            this.checkSaveSettings.UseVisualStyleBackColor = true;
+            this.checkSaveSettings.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Selects
             // 
@@ -191,7 +209,7 @@
             this.Selects.FlatAppearance.BorderSize = 0;
             this.Selects.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Selects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Selects.Location = new System.Drawing.Point(375, 13);
+            this.Selects.Location = new System.Drawing.Point(374, 13);
             this.Selects.Margin = new System.Windows.Forms.Padding(5);
             this.Selects.Name = "Selects";
             this.Selects.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -205,10 +223,11 @@
             // 
             this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox.Enabled = false;
             this.textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox.Location = new System.Drawing.Point(10, 21);
+            this.textBox.Location = new System.Drawing.Point(12, 21);
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(354, 26);
+            this.textBox.Size = new System.Drawing.Size(351, 26);
             this.textBox.TabIndex = 0;
             this.textBox.Text = "Select the file to update.";
             // 
@@ -330,70 +349,94 @@
             // 
             // auti
             // 
-            this.auti.Controls.Add(this.textBox3);
-            this.auti.Controls.Add(this.textBox1);
-            this.auti.Controls.Add(this.labelPort);
-            this.auti.Controls.Add(this.textBox2);
+            this.auti.Controls.Add(this.sshPort);
+            this.auti.Controls.Add(this.labelSshPort);
+            this.auti.Controls.Add(this.webPort);
+            this.auti.Controls.Add(this.sshPass);
+            this.auti.Controls.Add(this.labelWebPort);
+            this.auti.Controls.Add(this.sshLogin);
             this.auti.Controls.Add(this.LebelPass);
             this.auti.Controls.Add(this.LebelLogin);
-            this.auti.Location = new System.Drawing.Point(354, 2);
+            this.auti.Location = new System.Drawing.Point(330, 2);
             this.auti.Margin = new System.Windows.Forms.Padding(5);
             this.auti.Name = "auti";
             this.auti.Padding = new System.Windows.Forms.Padding(5);
-            this.auti.Size = new System.Drawing.Size(315, 100);
+            this.auti.Size = new System.Drawing.Size(284, 100);
             this.auti.TabIndex = 8;
             this.auti.TabStop = false;
             // 
-            // textBox3
+            // sshPort
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox3.Location = new System.Drawing.Point(200, 57);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(5);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 26);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.Text = "22";
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sshPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.sshPort.Location = new System.Drawing.Point(211, 58);
+            this.sshPort.Margin = new System.Windows.Forms.Padding(5);
+            this.sshPort.Name = "sshPort";
+            this.sshPort.Size = new System.Drawing.Size(60, 26);
+            this.sshPort.TabIndex = 12;
+            this.sshPort.Text = "22";
+            this.sshPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox1
+            // labelSshPort
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(72, 57);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.PasswordChar = '*';
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "user";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.labelSshPort.AutoSize = true;
+            this.labelSshPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelSshPort.Location = new System.Drawing.Point(161, 61);
+            this.labelSshPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelSshPort.Name = "labelSshPort";
+            this.labelSshPort.Size = new System.Drawing.Size(51, 20);
+            this.labelSshPort.TabIndex = 11;
+            this.labelSshPort.Text = "SSH:";
             // 
-            // labelPort
+            // webPort
             // 
-            this.labelPort.AutoSize = true;
-            this.labelPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelPort.Location = new System.Drawing.Point(224, 24);
-            this.labelPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(47, 20);
-            this.labelPort.TabIndex = 9;
-            this.labelPort.Text = "Port:";
+            this.webPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.webPort.Location = new System.Drawing.Point(212, 21);
+            this.webPort.Margin = new System.Windows.Forms.Padding(5);
+            this.webPort.Name = "webPort";
+            this.webPort.Size = new System.Drawing.Size(60, 26);
+            this.webPort.TabIndex = 10;
+            this.webPort.Text = "80";
+            this.webPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox2
+            // sshPass
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(72, 21);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(5);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = "user";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sshPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.sshPass.Location = new System.Drawing.Point(55, 57);
+            this.sshPass.Margin = new System.Windows.Forms.Padding(5);
+            this.sshPass.Name = "sshPass";
+            this.sshPass.PasswordChar = '*';
+            this.sshPass.Size = new System.Drawing.Size(100, 26);
+            this.sshPass.TabIndex = 3;
+            this.sshPass.Text = "user";
+            this.sshPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // labelWebPort
+            // 
+            this.labelWebPort.AutoSize = true;
+            this.labelWebPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelWebPort.Location = new System.Drawing.Point(159, 24);
+            this.labelWebPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelWebPort.Name = "labelWebPort";
+            this.labelWebPort.Size = new System.Drawing.Size(54, 20);
+            this.labelWebPort.TabIndex = 9;
+            this.labelWebPort.Text = "WEB:";
+            // 
+            // sshLogin
+            // 
+            this.sshLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.sshLogin.Location = new System.Drawing.Point(55, 21);
+            this.sshLogin.Margin = new System.Windows.Forms.Padding(5);
+            this.sshLogin.Name = "sshLogin";
+            this.sshLogin.Size = new System.Drawing.Size(100, 26);
+            this.sshLogin.TabIndex = 2;
+            this.sshLogin.Text = "user";
+            this.sshLogin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // LebelPass
             // 
             this.LebelPass.AutoSize = true;
             this.LebelPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LebelPass.Location = new System.Drawing.Point(11, 60);
+            this.LebelPass.Location = new System.Drawing.Point(6, 60);
             this.LebelPass.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LebelPass.Name = "LebelPass";
             this.LebelPass.Size = new System.Drawing.Size(53, 20);
@@ -404,156 +447,156 @@
             // 
             this.LebelLogin.AutoSize = true;
             this.LebelLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LebelLogin.Location = new System.Drawing.Point(6, 24);
+            this.LebelLogin.Location = new System.Drawing.Point(1, 24);
             this.LebelLogin.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.LebelLogin.Name = "LebelLogin";
             this.LebelLogin.Size = new System.Drawing.Size(58, 20);
             this.LebelLogin.TabIndex = 0;
             this.LebelLogin.Text = "Login:";
             // 
-            // labeltext
+            // labelNumber
             // 
-            this.labeltext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labeltext.AutoSize = true;
-            this.labeltext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labeltext.Location = new System.Drawing.Point(1370, 9);
-            this.labeltext.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.labeltext.Name = "labeltext";
-            this.labeltext.Size = new System.Drawing.Size(188, 20);
-            this.labeltext.TabIndex = 9;
-            this.labeltext.Text = "The number of parallel";
+            this.labelNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber.AutoSize = true;
+            this.labelNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber.Location = new System.Drawing.Point(1370, 9);
+            this.labelNumber.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber.Name = "labelNumber";
+            this.labelNumber.Size = new System.Drawing.Size(188, 20);
+            this.labelNumber.TabIndex = 9;
+            this.labelNumber.Text = "The number of parallel";
             // 
-            // label1
+            // labelUpdate
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(1426, 29);
-            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "updates.";
+            this.labelUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUpdate.AutoSize = true;
+            this.labelUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelUpdate.Location = new System.Drawing.Point(1426, 29);
+            this.labelUpdate.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelUpdate.Name = "labelUpdate";
+            this.labelUpdate.Size = new System.Drawing.Size(79, 20);
+            this.labelUpdate.TabIndex = 10;
+            this.labelUpdate.Text = "updates.";
             // 
-            // labeltext1
+            // labelNumber_1
             // 
-            this.labeltext1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labeltext1.AutoSize = true;
-            this.labeltext1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labeltext1.Location = new System.Drawing.Point(1356, 55);
-            this.labeltext1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.labeltext1.Name = "labeltext1";
-            this.labeltext1.Size = new System.Drawing.Size(19, 20);
-            this.labeltext1.TabIndex = 11;
-            this.labeltext1.Text = "1";
+            this.labelNumber_1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_1.AutoSize = true;
+            this.labelNumber_1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_1.Location = new System.Drawing.Point(1356, 55);
+            this.labelNumber_1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_1.Name = "labelNumber_1";
+            this.labelNumber_1.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_1.TabIndex = 11;
+            this.labelNumber_1.Text = "1";
             // 
-            // labeltext5
+            // labelNumber_2
             // 
-            this.labeltext5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labeltext5.AutoSize = true;
-            this.labeltext5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labeltext5.Location = new System.Drawing.Point(1442, 55);
-            this.labeltext5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.labeltext5.Name = "labeltext5";
-            this.labeltext5.Size = new System.Drawing.Size(19, 20);
-            this.labeltext5.TabIndex = 12;
-            this.labeltext5.Text = "5";
+            this.labelNumber_2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_2.AutoSize = true;
+            this.labelNumber_2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_2.Location = new System.Drawing.Point(1378, 55);
+            this.labelNumber_2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_2.Name = "labelNumber_2";
+            this.labelNumber_2.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_2.TabIndex = 14;
+            this.labelNumber_2.Text = "2";
             // 
-            // labeltext10
+            // labelNumber_3
             // 
-            this.labeltext10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labeltext10.AutoSize = true;
-            this.labeltext10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labeltext10.Location = new System.Drawing.Point(1545, 55);
-            this.labeltext10.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.labeltext10.Name = "labeltext10";
-            this.labeltext10.Size = new System.Drawing.Size(29, 20);
-            this.labeltext10.TabIndex = 13;
-            this.labeltext10.Text = "10";
+            this.labelNumber_3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_3.AutoSize = true;
+            this.labelNumber_3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_3.Location = new System.Drawing.Point(1399, 55);
+            this.labelNumber_3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_3.Name = "labelNumber_3";
+            this.labelNumber_3.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_3.TabIndex = 15;
+            this.labelNumber_3.Text = "3";
             // 
-            // label2
+            // labelNumber_4
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(1378, 55);
-            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 20);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "2";
+            this.labelNumber_4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_4.AutoSize = true;
+            this.labelNumber_4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_4.Location = new System.Drawing.Point(1421, 55);
+            this.labelNumber_4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_4.Name = "labelNumber_4";
+            this.labelNumber_4.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_4.TabIndex = 16;
+            this.labelNumber_4.Text = "4";
             // 
-            // label3
+            // labelNumber_5
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(1399, 55);
-            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 20);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "3";
+            this.labelNumber_5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_5.AutoSize = true;
+            this.labelNumber_5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_5.Location = new System.Drawing.Point(1442, 55);
+            this.labelNumber_5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_5.Name = "labelNumber_5";
+            this.labelNumber_5.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_5.TabIndex = 12;
+            this.labelNumber_5.Text = "5";
             // 
-            // label4
+            // labelNumber_6
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(1421, 55);
-            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 20);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "4";
+            this.labelNumber_6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_6.AutoSize = true;
+            this.labelNumber_6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_6.Location = new System.Drawing.Point(1463, 55);
+            this.labelNumber_6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_6.Name = "labelNumber_6";
+            this.labelNumber_6.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_6.TabIndex = 17;
+            this.labelNumber_6.Text = "6";
             // 
-            // label5
+            // labelNumber_7
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(1463, 55);
-            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(19, 20);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "6";
+            this.labelNumber_7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_7.AutoSize = true;
+            this.labelNumber_7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_7.Location = new System.Drawing.Point(1484, 55);
+            this.labelNumber_7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_7.Name = "labelNumber_7";
+            this.labelNumber_7.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_7.TabIndex = 18;
+            this.labelNumber_7.Text = "7";
             // 
-            // label6
+            // labelNumber_8
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(1484, 55);
-            this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 20);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "7";
+            this.labelNumber_8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_8.AutoSize = true;
+            this.labelNumber_8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_8.Location = new System.Drawing.Point(1506, 55);
+            this.labelNumber_8.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_8.Name = "labelNumber_8";
+            this.labelNumber_8.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_8.TabIndex = 19;
+            this.labelNumber_8.Text = "8";
             // 
-            // label7
+            // labelNumber_9
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(1506, 55);
-            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(19, 20);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "8";
+            this.labelNumber_9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_9.AutoSize = true;
+            this.labelNumber_9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_9.Location = new System.Drawing.Point(1526, 55);
+            this.labelNumber_9.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_9.Name = "labelNumber_9";
+            this.labelNumber_9.Size = new System.Drawing.Size(19, 20);
+            this.labelNumber_9.TabIndex = 20;
+            this.labelNumber_9.Text = "9";
             // 
-            // label8
+            // labelNumber_10
             // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(1526, 55);
-            this.label8.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(19, 20);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "9";
+            this.labelNumber_10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNumber_10.AutoSize = true;
+            this.labelNumber_10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelNumber_10.Location = new System.Drawing.Point(1545, 55);
+            this.labelNumber_10.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelNumber_10.Name = "labelNumber_10";
+            this.labelNumber_10.Size = new System.Drawing.Size(29, 20);
+            this.labelNumber_10.TabIndex = 13;
+            this.labelNumber_10.Text = "10";
             // 
             // Ui
             // 
@@ -561,18 +604,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1584, 702);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.labeltext10);
-            this.Controls.Add(this.labeltext5);
-            this.Controls.Add(this.labeltext1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.labeltext);
+            this.Controls.Add(this.labelNumber_9);
+            this.Controls.Add(this.labelNumber_8);
+            this.Controls.Add(this.labelNumber_7);
+            this.Controls.Add(this.labelNumber_6);
+            this.Controls.Add(this.labelNumber_4);
+            this.Controls.Add(this.labelNumber_3);
+            this.Controls.Add(this.labelNumber_2);
+            this.Controls.Add(this.labelNumber_10);
+            this.Controls.Add(this.labelNumber_5);
+            this.Controls.Add(this.labelNumber_1);
+            this.Controls.Add(this.labelUpdate);
+            this.Controls.Add(this.labelNumber);
             this.Controls.Add(this.auti);
             this.Controls.Add(this.maxParallelism);
             this.Controls.Add(this.progressBar);
@@ -619,24 +662,27 @@
         private System.Windows.Forms.TrackBar maxParallelism;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox auti;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox sshPass;
+        private System.Windows.Forms.TextBox sshLogin;
         private System.Windows.Forms.Label LebelPass;
         private System.Windows.Forms.Label LebelLogin;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label labelPort;
-        private System.Windows.Forms.Label labeltext;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label labeltext1;
-        private System.Windows.Forms.Label labeltext5;
-        private System.Windows.Forms.Label labeltext10;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox webPort;
+        private System.Windows.Forms.Label labelWebPort;
+        private System.Windows.Forms.Label labelNumber;
+        private System.Windows.Forms.Label labelUpdate;
+        private System.Windows.Forms.Label labelNumber_1;
+        private System.Windows.Forms.Label labelNumber_5;
+        private System.Windows.Forms.Label labelNumber_10;
+        private System.Windows.Forms.Label labelNumber_2;
+        private System.Windows.Forms.Label labelNumber_3;
+        private System.Windows.Forms.Label labelNumber_4;
+        private System.Windows.Forms.Label labelNumber_6;
+        private System.Windows.Forms.Label labelNumber_7;
+        private System.Windows.Forms.Label labelNumber_8;
+        private System.Windows.Forms.Label labelNumber_9;
+        private System.Windows.Forms.CheckBox checkSaveSettings;
+        private System.Windows.Forms.TextBox sshPort;
+        private System.Windows.Forms.Label labelSshPort;
     }
 }
 
